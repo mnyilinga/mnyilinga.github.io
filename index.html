@@ -1,66 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnyilinga Shots | Premium Modern Stock Photos</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        :root {
-            --primary: #6C3BFF;
-            --secondary: #FF4D8D;
-            --accent: #00D4FF;
-            --bg: #0F172A;
-            --card-bg: #111827;
-            --text: #F9FAFB;
-            --text-muted: #9CA3AF;
-            --glass-bg: rgba(17, 24, 39, 0.8);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+<title>Mnyilinga Shots</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); overflow-x: hidden; scroll-behavior: smooth; }
-        a { text-decoration: none; color: inherit; transition: var(--transition); }
-        ul { list-style: none; }
-        
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-        /* REUSABLE COMPONENTS */
-        .glass-card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 20px; }
-        .btn-primary { background: var(--gradient); color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(108, 59, 255, 0.3); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 77, 141, 0.4); }
-        
-        /* NAVBAR */
-        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1.5rem 2rem; transition: var(--transition); }
-        .navbar.sticky { background: var(--glass-bg); backdrop-filter: blur(20px); padding: 1rem 2rem; border-bottom: 1px solid var(--glass-border); }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .logo i { color: var(--accent); }
-        .logo span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; align-items: center; gap: 2.5rem; }
-        .nav-links a:hover { color: var(--accent); }
-        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; }
+<style>
 
-        /* HERO SECTION */
-        .hero { height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 0 2rem; overflow: hidden; }
-        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop') center/cover; opacity: 0.1; z-index: -1; }
-        .hero-content { max-width: 900px; position: relative; z-index: 2; animation: fadeIn 1s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .hero h1 { font-size: 4rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 700; }
-        .hero p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem; }
-        
-        /* SEARCH BAR */
-        .search-container { max-width: 700px; margin: 0 auto 2rem; }
-        .search-box { display: flex; background: var(--glass-bg); padding: 0.6rem; border-radius: 60px; border: 1px solid var(--glass-border); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .search-box input { flex: 1; background: transparent; border: none; padding: 0 1.5rem; color: white; font-size: 1.1rem; outline: none; }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#0F172A;
+color:#F9FAFB;
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 25px;
+background:#111827;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:600;
+color:#6C3BFF;
+}
+
+nav a{
+margin:0 12px;
+text-decoration:none;
+color:white;
+font-size:14px;
+}
+
+nav a:hover{
+color:#FF4D8D;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:80px 20px;
+}
+
+.hero h1{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.search{
+display:flex;
+justify-content:center;
+margin-bottom:25px;
+}
+
+.search input{
+width:60%;
+padding:15px;
+border:none;
+border-radius:30px 0 0 30px;
+outline:none;
+}
+
+.search button{
+padding:15px 25px;
+border:none;
+background:#6C3BFF;
+color:white;
+border-radius:0 30px 30px 0;
+cursor:pointer;
+}
+
+.tags span{
+background:#111827;
+padding:8px 14px;
+margin:6px;
+border-radius:20px;
+font-size:13px;
+display:inline-block;
+}
+
+/* GALLERY */
+
+.gallery{
+column-count:4;
+column-gap:15px;
+padding:25px;
+}
+
+.card{
+position:relative;
+margin-bottom:15px;
+cursor:pointer;
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+transition:0.4s;
+}
+
+.card:hover img{
+transform:scale(1.05);
+}
+
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+opacity:0;
+transition:0.3s;
+border-radius:10px;
+}
+
+.card:hover .overlay{
+opacity:1;
+}
+
+.overlay button{
+border:none;
+padding:10px 14px;
+border-radius:20px;
+background:#FF4D8D;
+color:white;
+cursor:pointer;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:2000;
+}
+
+.modal img{
+max-width:80%;
+max-height:80%;
+border-radius:10px;
+}
+
+.modal button{
+position:absolute;
+top:30px;
+right:40px;
+font-size:30px;
+background:none;
+border:none;
+color:white;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+background:#111827;
+padding:40px;
+text-align:center;
+margin-top:40px;
+}
+
+/* TOP BUTTON */
+
+#topBtn{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#6C3BFF;
+border:none;
+padding:12px;
+border-radius:50%;
+color:white;
+cursor:pointer;
+display:none;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.gallery{
+column-count:2;
+}
+
+.hero h1{
+font-size:28px;
+}
+
+.search input{
+width:70%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+<div class="logo">Mnyilinga Shots</div>
+
+<nav>
+<a href="#">Home</a>
+<a href="#">Explore</a>
+<a href="#">Trending</a>
+<a href="#">Categories</a>
+<a href="#">Collections</a>
+<a href="#">Login</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Discover Amazing Free Photos</h1>
+
+<div class="search">
+<input placeholder="Search free photos, backgrounds, textures...">
+<button>Search</button>
+</div>
+
+<div class="tags">
+
+<span>nature</span>
+<span>technology</span>
+<span>office</span>
+<span>business</span>
+<span>wallpaper</span>
+<span>design</span>
+<span>texture</span>
+
+</div>
+
+</section>
+
+<section class="gallery" id="gallery"></section>
+
+<div class="modal" id="modal">
+
+<button onclick="closeModal()">✕</button>
+
+<img id="modalImg">
+
+</div>
+
+<footer>
+
+<p>© 2026 Mnyilinga Shots. All rights reserved.</p>
+
+</footer>
+
+<button id="topBtn" onclick="scrollTopPage()">↑</button>
+
+<script>
+
+/* GENERATE IMAGES */
+
+let gallery=document.getElementById("gallery")
+
+for(let i=1;i<=30;i++){
+
+let card=document.createElement("div")
+card.className="card"
+
+card.innerHTML=`
+
+<img src="https://picsum.photos/400/${500+i}?random=${i}" onclick="openModal(this.src)">
+
+<div class="overlay">
+
+<button onclick="downloadImage('${i}')">Download</button>
+
+</div>
+
+`
+
+gallery.appendChild(card)
+
+}
+
+/* MODAL */
+
+function openModal(src){
+
+document.getElementById("modal").style.display="flex"
+document.getElementById("modalImg").src=src
+
+}
+
+function closeModal(){
+
+document.getElementById("modal").style.display="none"
+
+}
+
+/* DOWNLOAD */
+
+function downloadImage(id){
+
+let link=document.createElement("a")
+
+link.href=`https://picsum.photos/1200/800?random=${id}`
+
+link.download="mnyilinga-photo.jpg"
+
+link.click()
+
+}
+
+/* SCROLL TOP */
+
+window.onscroll=function(){
+
+let btn=document.getElementById("topBtn")
+
+if(document.documentElement.scrollTop>300){
+btn.style.display="block"
+}else{
+btn.style.display="none"
+}
+
+}
+
+function scrollTopPage(){
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+})
+
+}
+
+</script>
+
+</body>
+</html>        .search-box input { flex: 1; background: transparent; border: none; padding: 0 1.5rem; color: white; font-size: 1.1rem; outline: none; }
         .trending-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
         .tag { font-size: 0.85rem; color: var(--text-muted); padding: 5px 15px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); cursor: pointer; }
         .tag:hover { background: var(--primary); color: white; }
