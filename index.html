@@ -23,97 +23,52 @@ color:white;
 line-height:1.6;
 }
 
+
+
+
+  
+
 /* NAVBAR */
-.navbar{
+
+nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 8%;
-background:#0a0a0a;
-position:relative;
+padding:20px 8%;
+background:#111;
+position:sticky;
+top:0;
 z-index:1000;
 }
 
 .logo{
-font-size:20px;
+color:#00e0ff;
+font-size:22px;
 font-weight:bold;
-color:white;
 }
 
-/* HAMBURGER */
-
-.hamburger{
-width:30px;
-height:22px;
+nav ul{
 display:flex;
-flex-direction:column;
-justify-content:space-between;
+list-style:none;
+}
+
+nav ul li{
+margin-left:25px;
+}
+
+nav ul li a{
+text-decoration:none;
+color:white;
+font-size:14px;
+}
+
+.menu-btn{
+display:none;
+font-size:24px;
 cursor:pointer;
 }
 
-.hamburger span{
-display:block;
-height:3px;
-width:100%;
-background:white;
-border-radius:3px;
-transition:0.4s;
-}
-
-/* ANIMATION KUWA X */
-
-.hamburger.active span:nth-child(1){
-transform:rotate(45deg) translate(5px,5px);
-}
-
-.hamburger.active span:nth-child(2){
-opacity:0;
-}
-
-.hamburger.active span:nth-child(3){
-transform:rotate(-45deg) translate(6px,-6px);
-}
-
-/* MENU */
-
-.nav-menu{
-position:fixed;
-top:0;
-right:-100%;
-width:260px;
-height:100vh;
-background:#111;
-display:flex;
-flex-direction:column;
-padding-top:100px;
-gap:25px;
-transition:0.5s ease;
-}
-
-.nav-menu li{
-list-style:none;
-text-align:center;
-}
-
-.nav-menu a{
-color:white;
-text-decoration:none;
-font-size:18px;
-}
-
-/* MENU ACTIVE */
-
-.nav-menu.active{
-right:0;
-}
-
-/* HOVER EFFECT */
-
-.nav-menu a:hover{
-color:#00e0ff;
-}
-
-
+/* HERO */
 
 
 
