@@ -12,11 +12,11 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial, sans-serif;
 }
 
 body{
-background:#0b0b0b;
+background:#0a0a0a;
 color:white;
 line-height:1.6;
 }
@@ -27,14 +27,17 @@ nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 10%;
+padding:20px 8%;
 background:#111;
 position:sticky;
 top:0;
+z-index:1000;
 }
 
-nav h1{
+.logo{
 color:#00e0ff;
+font-size:22px;
+font-weight:bold;
 }
 
 nav ul{
@@ -52,34 +55,40 @@ color:white;
 font-size:14px;
 }
 
+.menu-btn{
+display:none;
+font-size:24px;
+cursor:pointer;
+}
+
 /* HERO */
 
 .hero{
-height:90vh;
+height:85vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:0 20px;
+padding:20px;
 }
 
-.hero h2{
-font-size:48px;
+.hero h1{
+font-size:50px;
 margin-bottom:20px;
 }
 
 .hero p{
-max-width:700px;
+max-width:600px;
+color:#bbb;
 margin-bottom:30px;
-color:#ccc;
 }
 
 .hero button{
 padding:15px 35px;
-background:#00e0ff;
 border:none;
-border-radius:5px;
+background:#00e0ff;
+border-radius:6px;
 cursor:pointer;
 font-size:16px;
 }
@@ -87,13 +96,13 @@ font-size:16px;
 /* SERVICES */
 
 .services{
-padding:80px 10%;
+padding:70px 8%;
 background:#111;
 }
 
 .services h2{
 text-align:center;
-margin-bottom:50px;
+margin-bottom:40px;
 font-size:32px;
 }
 
@@ -104,7 +113,7 @@ gap:25px;
 }
 
 .card{
-background:#1b1b1b;
+background:#1a1a1a;
 padding:25px;
 border-radius:10px;
 transition:0.3s;
@@ -116,19 +125,19 @@ background:#222;
 }
 
 .card h3{
-margin-bottom:10px;
 color:#00e0ff;
+margin-bottom:10px;
 }
 
 /* PROJECTS */
 
 .projects{
-padding:80px 10%;
+padding:70px 8%;
 }
 
 .projects h2{
 text-align:center;
-margin-bottom:50px;
+margin-bottom:40px;
 }
 
 .project{
@@ -141,18 +150,21 @@ margin-bottom:20px;
 /* ABOUT */
 
 .about{
-padding:80px 10%;
+padding:70px 8%;
 background:#111;
+text-align:center;
 }
 
-.about h2{
-margin-bottom:20px;
+.about p{
+max-width:700px;
+margin:auto;
+color:#bbb;
 }
 
 /* CONTACT */
 
 .contact{
-padding:80px 10%;
+padding:70px 8%;
 }
 
 .contact form{
@@ -164,8 +176,8 @@ flex-direction:column;
 
 .contact input,
 .contact textarea{
-margin-bottom:15px;
 padding:12px;
+margin-bottom:15px;
 border:none;
 border-radius:5px;
 }
@@ -180,37 +192,82 @@ cursor:pointer;
 /* FOOTER */
 
 footer{
-background:#000;
-padding:30px;
 text-align:center;
+padding:30px;
+background:#000;
 color:#aaa;
+margin-top:40px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+nav ul{
+display:none;
+flex-direction:column;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+background:#111;
+padding:20px;
+}
+
+nav ul.active{
+display:flex;
+}
+
+nav ul li{
+margin:15px 0;
+}
+
+.menu-btn{
+display:block;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.hero{
+height:auto;
+padding:100px 20px;
+}
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <nav>
-<h1>Mnyilinga</h1>
 
-<ul>
+<div class="logo">Mnyilinga</div>
+
+<ul id="menu">
+
 <li><a href="#">Home</a></li>
 <li><a href="#services">Huduma</a></li>
 <li><a href="#projects">Miradi</a></li>
 <li><a href="#about">Kuhusu</a></li>
 <li><a href="#contact">Mawasiliano</a></li>
+
 </ul>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
 </nav>
 
 <section class="hero">
 
-<h2>Karibu Mnyilinga Digital</h2>
+<h1>Mnyilinga Digital</h1>
 
 <p>
-Platform kuu inayounganisha huduma zote za digital
-kuanzia development, design, AI hadi media.
+Karibu kwenye platform kuu ya huduma zote za digital
+zinazotolewa na Mnyilinga Digital.
 </p>
 
 <button>Angalia Huduma</button>
@@ -230,27 +287,27 @@ kuanzia development, design, AI hadi media.
 
 <div class="card">
 <h3>UI / UX Design</h3>
-<p>Kubuni muonekano na uzoefu bora wa mtumiaji.</p>
+<p>Kubuni muonekano bora wa bidhaa za digital.</p>
 </div>
 
 <div class="card">
 <h3>Graphic Design</h3>
-<p>Logo, posters, branding na digital assets.</p>
+<p>Branding, logo, posters na digital assets.</p>
 </div>
 
 <div class="card">
 <h3>Mnyilinga AI</h3>
-<p>Artificial intelligence solutions kwa biashara na creators.</p>
+<p>Artificial intelligence tools.</p>
 </div>
 
 <div class="card">
 <h3>Digital Media</h3>
-<p>Content creation, video, photography na media services.</p>
+<p>Photography, video na media production.</p>
 </div>
 
 <div class="card">
 <h3>Tech Projects</h3>
-<p>Kutengeneza platform mpya za technology.</p>
+<p>Kujenga platforms mpya za technology.</p>
 </div>
 
 </div>
@@ -263,12 +320,12 @@ kuanzia development, design, AI hadi media.
 
 <div class="project">
 <h3>Mnyilinga Shots</h3>
-<p>Platform ya kushare photography na digital art.</p>
+<p>Platform ya kushare photography.</p>
 </div>
 
 <div class="project">
 <h3>Mnyilinga AI</h3>
-<p>AI system inayosaidia watu kufanya kazi kwa ufanisi zaidi.</p>
+<p>AI system ya kusaidia creators na developers.</p>
 </div>
 
 </section>
@@ -309,6 +366,14 @@ creators na biashara kukua.
 <p>© 2026 Mnyilinga Digital</p>
 
 </footer>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("menu").classList.toggle("active");
+}
+
+</script>
 
 </body>
 </html>
