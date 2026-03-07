@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siri za Chumbani | Tuma Bila Kujulikana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           1. CUSTOM DESIGN YA SIRI ZA CHUMBANI NEW)
+           ========================================= */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #ff007f, #7f00ff);
+            --bg-color: #0f0c29;
+            --bg-gradient: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: #b3b3b3;
+            --error-color: #ff3333;
+            --success-color: #00e676;
+        }
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Background Animation kali */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* =========================================
+           2. HEADER (FIXED - HAISOGEI)
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(15, 12, 41, 0.85);
+            backdrop-filter: blur(15px); /* Inafanya iwe na ukungu kwa nyuma kama kioo */
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+
+
+
+
+
+
+        /* =========================================
+           3. MAIN CONTAINER (SEHEMU YA KUTUMA SIRI)
+           ========================================= */
+        main {
+            margin-top: 100px; /* Nafasi ya header iliyofixed */
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .ngl-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-align: center;
+            animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            padding: 3px; /* Inatengeneza border ya gradient */
+            margin: 0 auto 15px auto;
+            position: relative;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #1a162b;
+        }
+
+        /* Kijikidude cha 'Online' */
+        .online-dot {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 15px;
+            height: 15px;
+            background-color: var(--success-color);
+            border-radius: 50%;
+            border: 2px solid #1a162b;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+        }
+
+        h2.username {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        p.prompt-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* =========================================
+           4. FORM NA TEXTAREA YA SIRI
+           ========================================= */
+        .input-group {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 15px;
+            color: white;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        }
+
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .char-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 127, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Animation ya kutetema (Kama mtu hajaandika kitu) */
+        .shake {
+            animation: shakeError 0.4s ease-in-out;
+            border-color: var(--error-color) !important;
+        }
+
+        @keyframes shakeError {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-8px); }
+            100% { transform: translateX(0); }
+        }
+
+        /* =========================================
+           5. NOTIFICATION TOAST (UJUMBE WA MAFANIKIO)
+           ========================================= */
+        .toast {
+            position: fixed;
+            top: -400px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 230, 118, 0.2);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .toast.show {
+            top: 300px; /* Inashuka chini ya header */
+        }
+
+        /* =========================================
+           6. FOOTER 
+           ========================================= */
+        footer {
+            text-align: center;
+            padding: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+
+
+/* Zuia I-beam kwenye text zote */
+body {
+    cursor: default;
+}
+
+/* Hakikisha sehemu za kuandika tu ndizo zina I-beam */
+input, textarea {
+    cursor: text;
+}
+        
+        
+/* Zima kuchagua text kwenye website nzima */
+body {
+    user-select: none;
+    -webkit-user-select: none; /* Kwa Chrome / Safari */
+    -ms-user-select: none;     /* Kwa Edge */
+}
+
+/* Ruhusu kuchagua na kuandika ndani ya sehemu za input tu */
+input, textarea {
+    user-select: auto;
+    -webkit-user-select: auto;
+    -ms-user-select: auto;
+}        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            
+            
+        }
+
+        .header-right-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* GitHub Style Hamburger */
+        .menu-toggle {
+            width: 24px;
+            height: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .bar {
+            width: 100%;
+            height: 2px;
+            background-color: white;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Animation ya kuwa X */
+        .is-open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .is-open .bar:nth-child(2) { opacity: 0; transform: translateX(10px); }
+        .is-open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* =========================================
+           3. GITHUB FULL SCREEN MENU OVERLAY
+           ========================================= */
+        .nav-overlay {
+            position: fixed;
+            top: 70px; /* Chini ya header */
+            left: 0;
+            width: 100%;
+            height: 0; /* Imefichwa */
+            background-color: #0d1117; /* Rangi nyeusi ya GitHub */
+            z-index: 1999;
+            overflow: hidden;
+            transition: height 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-overlay.active {
+            height: calc(100vh - 70px);
+        }
+
+        .nav-list {
+            list-style: none;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid #21262d;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: #161b22;
+        }
+
+        .nav-item i {
+            color: #7d8590;
+            font-size: 14px;
+        }
+
+        .menu-footer {
+            padding: 25px;
+            margin-top: auto; /* Inasukuma hivi chini kabisa */
+            background: #010409;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7d8590;
+        }
+
+        .btn-signup {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        
+
+    </style>
+</head>
+
+
+
+
+
+
+
+
+
+<body>
+
+    <div id="successToast" class="toast">
+        <i class="fas fa-check-circle"></i> Hongera mkasa wako umetumwa Kikamilifu! 🤫
+    </div>
+
+    <header>
+        <div class="logo">
+            <i class="fas fa-fire"></i> Siri za Chumbani
+        </div>
+
+
+
+
+
+<!-- Menu hidden initially -->
+
+
+
+
+        <div class="header-right-icons">
+          
+          
+          
+          
+          
+            <div class="menu-toggle" id="menuBtn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <div class="nav-list">
+            <a href="#" class="nav-item">Platform <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Solutions <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Resources <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Open Source <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="nav-item">Pricing</a>
+        </div>
+        <div class="menu-footer">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search or jump to...">
+            </div>
+            <a href="#" class="btn-signup">Sign up</a>
+        </div>
+    </nav>
+
+
+
+
+        
+        
+    </header>
+
+
+
+    <main>
+        <div class="ngl-card">
+            <div class="profile-pic">
+                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" alt="Profile">
+                <div class="online-dot"></div>
+            </div>
+            
+            <h2 class="username">Anonymous </h2>
+            <p class="prompt-text">
+                Tuma siri yako, usibaki na mambo mazito moyoni. 
+                <br><strong>(100% Bila Kujulikana)</strong> 🔒
+            </p>
+
+            <div class="input-group">
+                <textarea id="secretInput" placeholder="Anza kuandika siri yako hapa..." maxlength="10000"></textarea>
+                <div class="char-counter"><span id="charCount">0</span>/10000</div>
+            </div>
+
+            <button id="submitBtn" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Tuma Siri Yako
+            </button>
+        </div>
+    </main>
+
+    <footer>
+        <p>🔒 Imelindwa na 100% Anonymity. </p>
+        <p style="margin-top: 10px; opacity: 0.5;">© 2026 Mnyilinga Digital </p>
+    </footer>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     
+    
+    
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwDaOcxIkhJ_ef4_s-G5fpLP9RJ4R5Z-WYqqPavqkrewrsSiLRkM5Dve3IzAY2CHFUsWA/exec';
+        
+        const menuBtn = document.getElementById('menuBtn');
+        const navOverlay = document.getElementById('navOverlay');
+        const secretInput = document.getElementById('secretInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const charCount = document.getElementById('charCount');
+        const toast = document.getElementById('successToast');
+
+        // 1. Menu Logic
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('is-open');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // 2. Character Counter
+        secretInput.addEventListener('input', () => {
+            const length = secretInput.value.length;
+            charCount.textContent = length;
+            charCount.style.color = length > 9000 ? '#ff3333' : '#b3b3b3';
+            secretInput.classList.remove('shake');
+        });
+
+        // 3. REAL Send Logic to Google Sheets
+        submitBtn.addEventListener('click', async () => {
+            const message = secretInput.value.trim();
+
+            if (!message) {
+                secretInput.classList.add('shake');
+                setTimeout(() => secretInput.classList.remove('shake'), 400);
+                return;
+            }
+
+            // UI Feedback
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Inasafirisha...';
+            secretInput.disabled = true;
+
+            const formData = new URLSearchParams();
+            formData.append('message', message);
+
+            try {
+                // Kutuma kwa Google Apps Script
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData
+                });
+
+                // Mafanikio
+                toast.classList.add('show');
+                secretInput.value = '';
+                charCount.textContent = '0';
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                alert('Kuna hitilafu. Jaribu tena!');
+            } finally {
+                // Rudisha hali ya kawaida
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Tuma Nyingine';
+                secretInput.disabled = false;
+            }
+        });
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+
+ <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navOverlay = document.getElementById('navOverlay');
+        const submitBtn = document.getElementById('submitBtn');
+        const secretInput = document.getElementById('secretInput');
+        const toast = document.getElementById('successToast');
+
+        // Logic ya Menu
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('is-open');
+            navOverlay.classList.toggle('active');
+            // Zuia body kuscroll menu ikiwa wazi
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Logic ya Kutuma (Placeholder)
+        submitBtn.addEventListener('click', () => {
+            if(secretInput.value.trim() === "") return;
+            submitBtn.innerText = "Inatuma...";
+            setTimeout(() => {
+                secretInput.value = "";
+                submitBtn.innerText = "Tuma Siri Yako";
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }, 1000);
+        });
+    </script>    
+    
+    
+    
+    
+  
+    
+</body>
+</html>
