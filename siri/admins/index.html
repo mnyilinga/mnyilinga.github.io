@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Siri Board Ultra | Live Feed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --accent-neon: #00f2fe;
+            --accent-purple: #764ba2;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f1f5f9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at top right, rgba(118, 75, 162, 0.2), transparent 400px),
+                radial-gradient(circle at bottom left, rgba(0, 242, 254, 0.1), transparent 400px);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- Header & Search --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 5%;
+            background: rgba(7, 11, 20, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .header-top { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            font-size: 1.4rem; font-weight: 600;
+            background: linear-gradient(to right, #00f2fe, #764ba2);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .search-box {
+            position: relative; width: 100%; max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            padding: 10px 15px 10px 40px; border-radius: 12px;
+            color: white; outline: none; transition: 0.3s;
+        }
+
+        .search-box input:focus { border-color: var(--accent-neon); background: rgba(255,255,255,0.1); }
+        .search-box i { position: absolute; left: 15px; top: 13px; color: #64748b; }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 750px; margin: 160px auto 50px; padding: 0 20px;
+        }
+
+        /* --- Message Cards --- */
+        .message-grid { display: grid; gap: 20px; }
+
+        .msg-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 22px;
+            position: relative; overflow: hidden;
+            transition: 0.4s;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .msg-card:hover { border-color: rgba(0, 242, 254, 0.4); transform: scale(1.01); }
+
+        .msg-header { display: flex; align-items: center; margin-bottom: 18px; }
+
+        .avatar-box {
+            position: relative; margin-right: 15px;
+        }
+
+        .avatar {
+            width: 50px; height: 50px; border-radius: 14px;
+            background: #1e293b; padding: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .status-badge {
+            width: 12px; height: 12px; background: #10b981;
+            border: 2px solid var(--bg-dark); border-radius: 50%;
+            position: absolute; bottom: -2px; right: -2px;
+        }
+
+        .user-info h4 { font-size: 1rem; color: var(--accent-neon); }
+        .user-info span { font-size: 0.75rem; color: #64748b; }
+
+        /* --- Read More Logic --- */
+        .msg-content {
+            font-size: 1rem; color: #cbd5e1; margin-bottom: 15px;
+        }
+
+        .text-collapsed {
+            display: -webkit-box; -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+
+        .read-more-btn {
+            background: none; border: none; color: var(--accent-neon);
+            font-weight: 600; cursor: pointer; font-size: 0.85rem;
+            margin-top: 5px; display: block;
+        }
+
+        /* --- Footer Actions --- */
+        .card-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            border-top: 1px solid var(--glass-border); padding-top: 15px;
+        }
+
+        .action-group { display: flex; gap: 15px; }
+
+        .action-btn {
+            background: rgba(255,255,255,0.03); border: none;
+            color: #94a3b8; padding: 8px 12px; border-radius: 8px;
+            font-size: 0.85rem; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        .action-btn:hover { background: rgba(255,255,255,0.08); color: white; }
+        .action-btn.liked { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+
+        /* --- Animations --- */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Loading Spinner --- */
+        .loader-wrapper { text-align: center; padding: 40px; }
+        .spinner {
+            width: 40px; height: 40px; border: 3px solid rgba(0, 242, 254, 0.1);
+            border-top: 3px solid var(--accent-neon); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">SIRI BOARD ULTRA</div>
+            <div id="update-timer" style="font-size: 0.7rem; color: #64748b;">Auto-refresh: 5:00</div>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Tafuta siri yoyote..." onkeyup="filterMessages()">
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="loader" class="loader-wrapper">
+            <div class="spinner"></div>
+            <p style="margin-top: 15px; font-size: 0.8rem; color: #94a3b8;">Inapakia siri...</p>
+        </div>
+        
+        <div id="message-grid" class="message-grid"></div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDaOcxIkhJ_ef4_s-G5fpLP9RJ4R5Z-WYqqPavqkrewrsSiLRkM5Dve3IzAY2CHFUsWA/exec";
+        let allMessages = [];
+        const personas = [
+            "Mshauri wa Mapenzi", "Single Mother", "Binti wa Arusha", "Kijana wa Daslaam", 
+            "Mama Ntilie", "Daktari Siri", "The Silent Watcher", "Queen of Hearts", 
+            "Mzee wa Kazi", "Lady Boss", "Mtafuta Riziki", "Mnyamwezi", "Fundi Mitambo",
+            "Mzalendo halisi", "Mtumiaji Siri", "Anonymous", "Kaka Mkuu", "Dada Purity",
+            "Mwenyekiti", "Siri ya Chumbani"
+        ];
+
+        // 1. FETCH DATA
+        async function loadData() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                allMessages = data.reverse();
+                renderUI(allMessages);
+                document.getElementById('loader').style.display = 'none';
+            } catch (err) {
+                console.error("Haikuweza kupakia data");
+            }
+        }
+
+        // 2. RENDER UI WITH READ MORE LOGIC
+        function renderUI(data) {
+            const grid = document.getElementById('message-grid');
+            grid.innerHTML = "";
+
+            data.forEach((msg, i) => {
+                const personaName = personas[i % personas.length];
+                const avatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${personaName}`;
+                const isLong = msg.text.length > 180;
+                
+                const card = document.createElement('div');
+                card.className = "msg-card";
+                card.innerHTML = `
+                    <div class="msg-header">
+                        <div class="avatar-box">
+                            <img src="${avatar}" class="avatar">
+                            <div class="status-badge"></div>
+                        </div>
+                        <div class="user-info">
+                            <h4>${personaName}</h4>
+                            <span><i class="far fa-clock"></i> ${msg.time}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="msg-content ${isLong ? 'text-collapsed' : ''}" id="content-${msg.id}">
+                        ${msg.text}
+                    </div>
+                    
+                    ${isLong ? `<button class="read-more-btn" onclick="toggleReadMore('${msg.id}', this)">Soma Zaidi...</button>` : ''}
+
+                    <div class="card-footer">
+                        <div class="action-group">
+                            <button class="action-btn" onclick="handleLike('${msg.id}', this)">
+                                <i class="far fa-heart"></i> Like
+                            </button>
+                            <button class="action-btn" onclick="copyText('${msg.id}')">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <button class="action-btn" onclick="shareWa('${msg.id}')" style="color: #25d366">
+                            <i class="fab fa-whatsapp"></i> Share
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 3. READ MORE TOGGLE
+        function toggleReadMore(id, btn) {
+            const content = document.getElementById(`content-${id}`);
+            if (content.classList.contains('text-collapsed')) {
+                content.classList.remove('text-collapsed');
+                btn.innerText = "Onyesha kidogo";
+            } else {
+                content.classList.add('text-collapsed');
+                btn.innerText = "Soma Zaidi...";
+            }
+        }
+
+        // 4. SEARCH FILTER
+        function filterMessages() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allMessages.filter(m => m.text.toLowerCase().includes(query));
+            renderUI(filtered);
+        }
+
+        // 5. LIKE LOGIC (LOCAL)
+        function handleLike(id, btn) {
+            btn.classList.toggle('liked');
+            const icon = btn.querySelector('i');
+            if(btn.classList.contains('liked')) {
+                icon.className = "fas fa-heart";
+                btn.innerHTML = `<i class="fas fa-heart"></i> Liked`;
+            } else {
+                icon.className = "far fa-heart";
+                btn.innerHTML = `<i class="far fa-heart"></i> Like`;
+            }
+        }
+
+        // 6. COPY & SHARE
+        function copyText(id) {
+            const text = document.getElementById(`content-${id}`).innerText;
+            navigator.clipboard.writeText(text);
+            alert("Ujumbe umenakiliwa!");
+        }
+
+        function shareWa(id) {
+            const text = document.getElementById(`content-${id}`).innerText;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n\nSoma siri zaidi hapa: [LINK]")}`);
+        }
+
+        // 7. AUTO-REFRESH TIMER
+        let timeLeft = 300; // 5 minutes
+        setInterval(() => {
+            timeLeft--;
+            if (timeLeft <= 0) {
+                timeLeft = 300;
+                loadData();
+            }
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('update-timer').innerText = `Auto-refresh: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }, 1000);
+
+        // Run on start
+        loadData();
+    </script>
+</body>
+</html>
