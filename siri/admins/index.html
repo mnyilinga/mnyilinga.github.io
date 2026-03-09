@@ -410,6 +410,65 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Glassy notification in the center */
+.toast {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.05); /* semi-transparent glass */
+    backdrop-filter: blur(15px); /* glass blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #00f2fe; /* neon text */
+    padding: 20px 30px;
+    border-radius: 16px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 220px;
+    z-index: 9999;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    opacity: 0;
+    animation: fadeScale 1.5s forwards; /* fade + scale */
+}
+
+/* Animation: fade in, scale up, then fade out */
+@keyframes fadeScale {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    10%, 80% { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 
@@ -719,12 +778,91 @@ body {
             }
         }
 
-        // 6. COPY & SHARE
-        function copyText(id) {
-            const text = document.getElementById(`content-${id}`).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Ujumbe umenakiliwa!");
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- GLASSY POPUP NOTIFICATIONS (NO BROWSER PERMISSION) ---
+function showGlassNotification(msg) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 1500);
+}
+
+// --- COPY FUNCTION ---
+function copyText(id) {
+    const text = document.getElementById(`content-${id}`).innerText;
+    navigator.clipboard.writeText(text)
+        .then(() => showGlassNotification("✅ Ujumbe umenakiliwa!"))
+        .catch(() => showGlassNotification("⚠️ Haikuweza nakili, jaribu tena!"));
+}
+
+// --- SHARE FUNCTION (WhatsApp) ---
+function shareWa(id) {
+    const text = document.getElementById(`content-${id}`).innerText;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n\nSoma siri zaidi hapa: [LINK]")}`);
+    showGlassNotification("📤 Ujumbe ume-share WhatsApp!");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         function shareWa(id) {
             const text = document.getElementById(`content-${id}`).innerText;
@@ -886,48 +1024,7 @@ function toggleReadMore(id, btn) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
