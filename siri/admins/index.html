@@ -823,8 +823,8 @@ function showGlassNotification(msg) {
 function copyText(id) {
     const text = document.getElementById(`content-${id}`).innerText;
     navigator.clipboard.writeText(text)
-        .then(() => showGlassNotification("✅ Ujumbe umenakiliwa!"))
-        .catch(() => showGlassNotification("⚠️ Haikuweza nakili, jaribu tena!"));
+        .then(() => showGlassNotification("Hongera ujumbe umenakiliwa kwa mafanikio"))
+        .catch(() => showGlassNotification("⚠️ Haikuweza kunakili, jaribu tena!"));
 }
 
 // --- SHARE FUNCTION (WhatsApp) ---
@@ -859,39 +859,34 @@ function shareWa(id) {
 
 
 
+    function shareWa(id) { 
+        const content = document.getElementById(`content-${id}`).innerText;
+        // Badilisha [LINK] na link halisi ya page
+        const waLink = "https://mnyilinga.co.tz/siri"; 
+        const message = `Soma siri hii hapa: ${waLink}`; // Hii ni direct link
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
 
+        // Onyesha notification
+        showGlassNotification("📤 Ujumbe ume-share WhatsApp!");
+    }
 
-
-
-
-        function shareWa(id) {
-            const text = document.getElementById(`content-${id}`).innerText;
-            window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n\nSoma siri zaidi hapa: [LINK]")}`);
+    // 7. AUTO-REFRESH TIMER
+    let timeLeft = 300; // 5 minutes
+    setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) {
+            timeLeft = 300;
+            loadData();
         }
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        document.getElementById('update-timer').innerText = `Auto-refresh: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }, 1000);
 
-        // 7. AUTO-REFRESH TIMER
-        let timeLeft = 300; // 5 minutes
-        setInterval(() => {
-            timeLeft--;
-            if (timeLeft <= 0) {
-                timeLeft = 300;
-                loadData();
-            }
-            const mins = Math.floor(timeLeft / 60);
-            const secs = timeLeft % 60;
-            document.getElementById('update-timer').innerText = `Auto-refresh: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }, 1000);
+    // Run on start
+    loadData();
 
-        // Run on start
-        loadData();
     </script>
-
-
-
-
-
-
-
 
 
 
@@ -1024,7 +1019,26 @@ function toggleReadMore(id, btn) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
+
+
+
+
+
+
+
 
 
 
