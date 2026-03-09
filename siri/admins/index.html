@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+
+
+
+
+
+
+
+
+
         :root {
             --bg-dark: #070b14;
             --accent-neon: #00f2fe;
@@ -105,19 +114,10 @@
         .user-info span { font-size: 0.75rem; color: #64748b; }
 
         /* --- Read More Logic --- */
-        .msg-content {
-            font-size: 1rem; color: #cbd5e1; margin-bottom: 15px;
-        }
-
+        
         .text-collapsed {
             display: -webkit-box; -webkit-line-clamp: 3;
             -webkit-box-orient: vertical; overflow: hidden;
-        }
-
-        .read-more-btn {
-            background: none; border: none; color: var(--accent-neon);
-            font-weight: 600; cursor: pointer; font-size: 0.85rem;
-            margin-top: 5px; display: block;
         }
 
         /* --- Footer Actions --- */
@@ -150,8 +150,271 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Custom Footer Styling --- */
+.main-footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 60px 5% 30px;
+    border-top: 1px solid #1e293b;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.footer-col h3 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.footer-col ul li a:hover {
+    color: var(--accent-neon, #00f2fe);
+}
+
+.footer-middle {
+    text-align: center;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-logo-text {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.social-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.social-links a {
+    color: #ffffff;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--accent-neon, #00f2fe);
+    transform: translateY(-3px);
+}
+
+.app-downloads {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+}
+
+.app-btn {
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: 0.3s;
+    min-width: 160px;
+}
+
+.app-btn:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+.app-btn i { font-size: 1.5rem; }
+.app-btn div span { display: block; font-size: 0.65rem; }
+.app-btn div strong { font-size: 0.9rem; }
+
+.footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.bottom-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.bottom-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.copyright-text {
+    font-size: 0.75rem;
+    color: #64748b;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .app-downloads { flex-direction: column; align-items: center; }
+    .social-links { gap: 15px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.read-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Nafasi kati ya maneno na icon */
+    color: var(--accent-neon);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.read-more-btn i {
+    transition: transform 0.3s ease; /* Inafanya icon igeuke kwa ulaini */
+}
+
+/* Wakati active, icon inageuka juu */
+.read-more-btn.active i {
+    transform: rotate(180deg);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* --- Mpangilio wa Ujumbe kwa ajili ya Animation --- */
+.msg-content {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    overflow: hidden; /* Muhimu kwa ajili ya kuficha maandishi yanayozidi */
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1); /* Inafanya ishuke laini sana */
+    display: block; /* Tunabadilisha kutoka webkit-box kwenda block */
+}
+
+/* Hali ya kufunga (Lines 3 pekee) */
+.text-collapsed {
+    max-height: 4.5rem; /* Inaruhusu takriban mistari 3 ionekane */
+    /* Tunarudisha line-clamp hapa ili kuonyesha '...' mwishoni */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Hali ya kufungua (Soma zaidi) */
+.text-expanded {
+    max-height: 2000px; /* Weka namba kubwa inayoweza kutosha ujumbe wowote mrefu */
+}
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
+
+
+
+
+
+
+
+
+
 <body>
 
     <header>
@@ -173,6 +436,158 @@
         
         <div id="message-grid" class="message-grid"></div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="main-footer">
+    <div class="footer-top">
+        <div class="footer-col">
+            <h3>Siri Features</h3>
+            <ul>
+                <li><a href="#">Siri za Leo</a></li>
+                <li><a href="#">Trending</a></li>
+                <li><a href="#">Mshauri wa Mapenzi</a></li>
+                <li><a href="#">Ushuhuda</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Explore</h3>
+            <ul>
+                <li><a href="#">Watch Stories</a></li>
+                <li><a href="#">Listen Audio</a></li>
+                <li><a href="#">Games</a></li>
+                <li><a href="#">Polls</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>About Siri</h3>
+            <ul>
+                <li><a href="#">Ni nini Siri Board?</a></li>
+                <li><a href="#">Usalama wako</a></li>
+                <li><a href="#">Ajira</a></li>
+                <li><a href="#">Tupigie</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-middle">
+        <span class="logo footer-logo-text">SIRI</span>
+        
+        <p class="social-title">Follow Siri</p>
+        <div class="social-links">
+            <a href="https://facebook.com/siri" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/siri" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://instagram.com/siri" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@siri" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://linkedin.com/company/siri" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://threads.net/@siri" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
+        </div>
+
+        <div class="app-downloads">
+            <a href="#" class="app-btn">
+                <i class="fab fa-apple"></i>
+                <div>
+                    <span>Download on the</span>
+                    <strong>App Store</strong>
+                </div>
+            </a>
+            <a href="#" class="app-btn">
+                <i class="fab fa-google-play"></i>
+                <div>
+                    <span>GET IT ON</span>
+                    <strong>Google Play</strong>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="bottom-links">
+            <a href="#">Terms of Use</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Manage Cookies</a>
+            <a href="#">Ad Choices</a>
+            <a href="#">Accessibility & CC</a>
+            <a href="#">About</a>
+            <a href="#">Newsletters</a>
+        </div>
+        <div class="copyright-text">
+            © 2026 Siri Board Network. A Mnyilinga Discovery Company. All Rights Reserved.<br>
+            Siri Board ™ & © 2026 Siri Network.
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDaOcxIkhJ_ef4_s-G5fpLP9RJ4R5Z-WYqqPavqkrewrsSiLRkM5Dve3IzAY2CHFUsWA/exec";
@@ -198,10 +613,30 @@
             }
         }
 
+
+
+
+
+
+
+
+
+
+
+
         // 2. RENDER UI WITH READ MORE LOGIC
         function renderUI(data) {
             const grid = document.getElementById('message-grid');
             grid.innerHTML = "";
+
+
+
+
+
+
+
+
+
 
             data.forEach((msg, i) => {
                 const personaName = personas[i % personas.length];
@@ -306,5 +741,194 @@
         // Run on start
         loadData();
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+ // 1. RENDER UI WITH READ MORE & CHEVRON LOGIC
+function renderUI(data) {
+    const grid = document.getElementById('message-grid');
+    grid.innerHTML = ""; // Futa kila kitu kwanza
+
+    data.forEach((msg, i) => {
+        const personaName = personas[i % personas.length];
+        const avatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${personaName}`;
+        
+        // Hapa tunaangalia kama ujumbe ni mrefu (zaidi ya herufi 180)
+        const isLong = msg.text.length > 180;
+        
+        const card = document.createElement('div');
+        card.className = "msg-card";
+        card.innerHTML = `
+            <div class="msg-header">
+                <div class="avatar-box">
+                    <img src="${avatar}" class="avatar">
+                    <div class="status-badge"></div>
+                </div>
+                <div class="user-info">
+                    <h4>${personaName}</h4>
+                    <span><i class="far fa-clock"></i> ${msg.time}</span>
+                </div>
+            </div>
+            
+            <div class="msg-content ${isLong ? 'text-collapsed' : ''}" id="content-${msg.id}">
+                ${msg.text}
+            </div>
+            
+            ${isLong ? `
+                <button class="read-more-btn" onclick="toggleReadMore('${msg.id}', this)">
+                    <span>Soma Zaidi</span> 
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            ` : ''}
+
+            <div class="card-footer">
+                <div class="action-group">
+                    <button class="action-btn" onclick="handleLike('${msg.id}', this)">
+                        <i class="far fa-heart"></i> Like
+                    </button>
+                    <button class="action-btn" onclick="copyText('${msg.id}')">
+                        <i class="far fa-copy"></i> Copy
+                    </button>
+                </div>
+                <button class="action-btn" onclick="shareWa('${msg.id}')" style="color: #25d366">
+                    <i class="fab fa-whatsapp"></i> Share
+                </button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// 2. LOGIC YA TOGGLE (BADILI MAANDISHI NA ICON)
+function toggleReadMore(id, btn) {
+    const content = document.getElementById(`content-${id}`);
+    const isCollapsed = content.classList.toggle('text-collapsed');
+    
+    // Zungusha icon (kumbuka uwe na ile CSS niliyokupa ya .active i)
+    btn.classList.toggle('active');
+    
+    // Badilishi Maandishi huku ukihifadhi Icon
+    if (isCollapsed) {
+        btn.innerHTML = '<span>Soma Zaidi</span> <i class="fas fa-chevron-down"></i>';
+    } else {
+        btn.innerHTML = '<span>Onyesha kidogo</span> <i class="fas fa-chevron-down"></i>';
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function toggleReadMore(id, btn) {
+    const content = document.getElementById(`content-${id}`);
+    
+    // Tunabadilisha kati ya kufunga na kufungua
+    const isExpanding = content.classList.contains('text-collapsed');
+    
+    if (isExpanding) {
+        content.classList.remove('text-collapsed');
+        content.classList.add('text-expanded');
+        btn.classList.add('active');
+        btn.innerHTML = '<span>Onyesha kidogo</span> <i class="fas fa-chevron-down"></i>';
+    } else {
+        content.classList.add('text-collapsed');
+        content.classList.remove('text-expanded');
+        btn.classList.remove('active');
+        btn.innerHTML = '<span>Soma Zaidi</span> <i class="fas fa-chevron-down"></i>';
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
