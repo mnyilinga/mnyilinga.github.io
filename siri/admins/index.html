@@ -168,6 +168,59 @@ body {
             z-index: 10000;
         }
 
+        /* More content (old stories) section */
+        .more-section {
+            margin-top: 24px;
+        }
+
+        .more-toggle-btn {
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 999px;
+            padding: 8px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #e2e8f0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.25s, border-color 0.25s;
+        }
+
+        .more-toggle-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .more-toggle-btn.open {
+            background: linear-gradient(to right, #00f2fe22, #764ba222);
+            border-color: var(--accent-neon);
+            transform: translateY(-1px);
+        }
+
+        .more-toggle-btn.open i {
+            transform: rotate(180deg);
+        }
+
+        .more-grid {
+            margin-top: 18px;
+            transition: max-height 0.5s ease, opacity 0.4s ease, transform 0.4s ease;
+            overflow: hidden;
+        }
+
+        .more-grid.collapsed {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+
+        .more-grid.expanded {
+            max-height: 5000px; /* kubwa ili ichukue content zote */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
 
 
 
@@ -512,6 +565,15 @@ body {
         </div>
         
         <div id="message-grid" class="message-grid"></div>
+
+        <!-- More Content (Old Stories) -->
+        <div id="more-section" class="more-section">
+            <button id="more-toggle" class="more-toggle-btn" onclick="toggleMoreContent()">
+                <span>More content</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div id="more-grid" class="message-grid more-grid collapsed"></div>
+        </div>
     </div>
 
 
@@ -637,6 +699,7 @@ body {
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDaOcxIkhJ_ef4_s-G5fpLP9RJ4R5Z-WYqqPavqkrewrsSiLRkM5Dve3IzAY2CHFUsWA/exec";
         let allMessages = [];
+        const LATEST_LIMIT = 30; // idadi ya hadithi mpya zinazoonekana juu
         const personas = [
             "Mshauri wa Mapenzi", "Single Mother", "Binti wa Arusha", "Kijana wa Daslaam", 
             "Mama Ntilie", "Daktari Siri", "The Silent Watcher", "Queen of Hearts", 
@@ -817,14 +880,32 @@ function shareWa(id) {
 
     // duplicate shareWa removed (now using the global one above)
 
-    // 7. AUTO-REFRESH TIMER
+    // 7. AUTO-REFRESH TIMER (inaheshimu "Soma Zaidi")
     let timeLeft = 300; // 5 minutes
+    let expandedCount = 0;   // idadi ya articles zilizo kwenye hali ya Soma Zaidi
+    let pendingRefresh = false; // kama muda umeisha wakati msomaji anasoma
+
     setInterval(() => {
-        timeLeft--;
-        if (timeLeft <= 0) {
-            timeLeft = 300;
-            loadData();
+        // Shusha muda tu kama bado haujaisha
+        if (timeLeft > 0) {
+            timeLeft--;
         }
+
+        if (expandedCount === 0) {
+            // Msomaji hasomi (hakuna Soma Zaidi iliyo wazi)
+            if (timeLeft <= 0 && !pendingRefresh) {
+                // Timer imeisha na hakuna anayesoma => refresh sasa
+                pendingRefresh = false;
+                timeLeft = 300;
+                loadData();
+            }
+        } else {
+            // Msomaji anasoma, timer ikifika 0 tuweke pending ili ifanyike baadaye
+            if (timeLeft <= 0) {
+                pendingRefresh = true;
+            }
+        }
+
         const mins = Math.floor(timeLeft / 60);
         const secs = timeLeft % 60;
         document.getElementById('update-timer').innerText = `Auto-refresh: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
@@ -859,12 +940,27 @@ function shareWa(id) {
 
 
 <script>
- // 1. RENDER UI WITH READ MORE & CHEVRON LOGIC
+// 1. RENDER UI WITH READ MORE, CHEVRON & MORE CONTENT
 function renderUI(data) {
-    const grid = document.getElementById('message-grid');
-    grid.innerHTML = ""; // Futa kila kitu kwanza
+    const grid = document.getElementById('message-grid');          // latest content
+    const moreGrid = document.getElementById('more-grid');         // old content
+    const moreSection = document.getElementById('more-section');
 
-    data.forEach((msg, i) => {
+    grid.innerHTML = "";       // futa latest
+    moreGrid.innerHTML = "";   // futa za zamani
+
+    const latest = data.slice(0, LATEST_LIMIT);
+    const older = data.slice(LATEST_LIMIT);
+
+    // Kama hakuna content ya zamani, ficha kabisa section ya "More content"
+    if (!older.length) {
+        moreSection.style.display = "none";
+    } else {
+        moreSection.style.display = "block";
+    }
+
+    // Render latest messages (juu kabisa)
+    latest.forEach((msg, i) => {
         const personaName = personas[i % personas.length];
         const avatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${personaName}`;
         
@@ -912,6 +1008,54 @@ function renderUI(data) {
         `;
         grid.appendChild(card);
     });
+
+    // Render old messages kwenye sehemu ya "More content"
+    older.forEach((msg, index) => {
+        const personaName = personas[index % personas.length];
+        const avatar = `https://api.dicebear.com/7.x/bottts/svg?seed=${personaName}`;
+        const isLong = msg.text.length > 180;
+
+        const card = document.createElement('div');
+        card.className = "msg-card";
+        card.innerHTML = `
+            <div class="msg-header">
+                <div class="avatar-box">
+                    <img src="${avatar}" class="avatar">
+                    <div class="status-badge"></div>
+                </div>
+                <div class="user-info">
+                    <h4>${personaName}</h4>
+                    <span><i class="far fa-clock"></i> ${msg.time}</span>
+                </div>
+            </div>
+            
+            <div class="msg-content ${isLong ? 'text-collapsed' : ''}" id="content-${msg.id}">
+                ${msg.text}
+            </div>
+            
+            ${isLong ? `
+                <button class="read-more-btn" onclick="toggleReadMore('${msg.id}', this)">
+                    <span>Soma Zaidi</span> 
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            ` : ''}
+
+            <div class="card-footer">
+                <div class="action-group">
+                    <button class="action-btn" onclick="handleLike('${msg.id}', this)">
+                        <i class="far fa-heart"></i> Like
+                    </button>
+                    <button class="action-btn" onclick="copyText('${msg.id}')">
+                        <i class="far fa-copy"></i> Copy
+                    </button>
+                </div>
+                <button class="action-btn edit-btn" onclick="shareWa('${msg.id}')">
+                    <i class="fas fa-pen-to-square"></i> Edit
+                </button>
+            </div>
+        `;
+        moreGrid.appendChild(card);
+    });
 }
 
 // 2. LOGIC YA TOGGLE (BADILI MAANDISHI NA ICON)
@@ -930,6 +1074,25 @@ function toggleReadMore(id, btn) {
     }
 }
 
+// 3. TOGGLE "MORE CONTENT" SECTION (old content)
+function toggleMoreContent() {
+    const moreGrid = document.getElementById('more-grid');
+    const toggleBtn = document.getElementById('more-toggle');
+    const isCollapsed = moreGrid.classList.contains('collapsed');
+
+    if (isCollapsed) {
+        moreGrid.classList.remove('collapsed');
+        moreGrid.classList.add('expanded');
+        toggleBtn.classList.add('open');
+        toggleBtn.innerHTML = '<span>Funga content za zamani</span> <i class="fas fa-chevron-down"></i>';
+    } else {
+        moreGrid.classList.add('collapsed');
+        moreGrid.classList.remove('expanded');
+        toggleBtn.classList.remove('open');
+        toggleBtn.innerHTML = '<span>More content</span> <i class="fas fa-chevron-down"></i>';
+    }
+}
+
 
 
 
@@ -944,19 +1107,38 @@ function toggleReadMore(id, btn) {
 function toggleReadMore(id, btn) {
     const content = document.getElementById(`content-${id}`);
     
-    // Tunabadilisha kati ya kufunga na kufungua
-    const isExpanding = content.classList.contains('text-collapsed');
+    // Je, sasa hivi iko kwenye hali ya kufungwa?
+    const isCurrentlyCollapsed = content.classList.contains('text-collapsed');
     
-    if (isExpanding) {
+    if (isCurrentlyCollapsed) {
+        // Inafunguliwa (msomaji anaenda kusoma kwa kirefu)
         content.classList.remove('text-collapsed');
         content.classList.add('text-expanded');
         btn.classList.add('active');
         btn.innerHTML = '<span>Onyesha kidogo</span> <i class="fas fa-chevron-down"></i>';
+
+        if (typeof expandedCount !== "undefined") {
+            expandedCount++;
+        }
     } else {
+        // Inafungwa (msomaji anarudi kwenye hali fupi)
         content.classList.add('text-collapsed');
         content.classList.remove('text-expanded');
         btn.classList.remove('active');
         btn.innerHTML = '<span>Soma Zaidi</span> <i class="fas fa-chevron-down"></i>';
+
+        if (typeof expandedCount !== "undefined" && expandedCount > 0) {
+            expandedCount--;
+
+            // Kama hakuna tena anayesoma na kulikuwa na refresh iliyosubiri, ifanye sasa
+            if (expandedCount === 0 && typeof pendingRefresh !== "undefined" && pendingRefresh) {
+                pendingRefresh = false;
+                if (typeof timeLeft !== "undefined") {
+                    timeLeft = 300;
+                }
+                loadData();
+            }
+        }
     }
 }
 
