@@ -18,81 +18,193 @@
 }
 
 body{
-background:#0a0a0a;
-color:#fff;
-font-family:'Inter',sans-serif;
+background:#050815;
+color:#e5e7eb;
+font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:20px;
+padding:16px;
+min-height:100vh;
 }
 
 /* ADMIN PANEL */
 .admin-panel{
 width:100%;
-max-width:900px;
-background:linear-gradient(145deg,#141414,#1d1d1d);
-border-radius:25px;
-padding:25px;
-box-shadow:0 20px 60px rgba(0,0,0,0.7);
-border:1px solid rgba(255,255,255,0.08);
-margin-bottom:40px;
+max-width:520px;
+background:radial-gradient(circle at 0 0,rgba(56,189,248,0.25),#020617 65%);
+border-radius:24px;
+padding:18px 16px 16px;
+box-shadow:
+ 0 18px 45px rgba(15,23,42,0.95),
+ 0 0 0 1px rgba(15,23,42,0.9);
+border:1px solid rgba(148,163,184,0.28);
+backdrop-filter:blur(22px);
+margin-bottom:22px;
+position:relative;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.admin-panel::before{
+content:"";
+position:absolute;
+inset:-1px;
+border-radius:inherit;
+background:
+ radial-gradient(circle at 0 0,rgba(56,189,248,0.35),transparent 55%),
+ radial-gradient(circle at 100% 0,rgba(129,140,248,0.25),transparent 55%);
+opacity:0.65;
+mix-blend-mode:soft-light;
+pointer-events:none;
 }
 
 .admin-title{
-font-size:26px;
+position:relative;
+z-index:1;
+font-size:20px;
 font-weight:800;
-margin-bottom:15px;
-background:linear-gradient(90deg,#00d1ff,#00ffae);
+letter-spacing:.06em;
+text-transform:uppercase;
+background:linear-gradient(120deg,#22d3ee,#a855f7,#f97316);
 -webkit-background-clip:text;
+background-clip:text;
 color:transparent;
+margin-bottom:2px;
+}
+
+.admin-subtitle{
+position:relative;
+z-index:1;
+font-size:12px;
+color:#9ca3af;
+line-height:1.5;
 }
 
 .input-box{
+position:relative;
+z-index:1;
 width:100%;
-background:#0b0b0b;
+background:rgba(15,23,42,0.96);
 border-radius:18px;
-padding:10px;
-border:1px solid #333;
+padding:2px;
+border:1px solid rgba(148,163,184,0.5);
+box-shadow:0 0 0 1px rgba(15,23,42,0.9);
+transition:border-color .15s ease-out,box-shadow .15s ease-out,transform .08s ease-out;
+}
+
+.input-box:focus-within{
+border-color:rgba(34,211,238,0.9);
+box-shadow:
+ 0 0 0 1px rgba(34,211,238,0.5),
+ 0 0 30px rgba(34,211,238,0.55);
+transform:translateY(-.5px);
 }
 
 textarea{
 width:100%;
-height:160px;
-background:transparent;
+height:170px;
+background:radial-gradient(circle at 0 0,#020617,#020617 70%);
 border:none;
-color:#00ff88;
-font-size:18px;
+color:#e5e7eb;
+font-size:15px;
 resize:none;
 outline:none;
-padding:15px;
+padding:14px 14px 22px;
 line-height:1.5;
+border-radius:16px;
+box-shadow:inset 0 0 0 1px rgba(15,23,42,0.9);
 }
 
-textarea::placeholder{color:#666;}
+textarea::placeholder{
+color:#64748b;
+}
 
 .btn-gen{
+position:relative;
+z-index:1;
 width:100%;
-margin-top:15px;
-padding:18px;
-font-size:18px;
-font-weight:900;
+margin-top:8px;
+padding:13px 14px;
+font-size:15px;
+font-weight:700;
 border:none;
-border-radius:14px;
+border-radius:999px;
 cursor:pointer;
-background:linear-gradient(90deg,#00d1ff,#00ffa2);
-color:#000;
-transition:0.2s;
+background:
+ linear-gradient(#020617,#020617) padding-box,
+ linear-gradient(120deg,#22d3ee,#6366f1,#22c55e) border-box;
+border:1px solid transparent;
+color:#e5e7eb;
+letter-spacing:.06em;
+text-transform:none;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+box-shadow:
+ 0 16px 38px rgba(8,47,73,0.96),
+ 0 0 0 1px rgba(15,23,42,0.9);
+transition:transform .08s ease-out,box-shadow .12s ease-out,filter .12s ease-out,background .15s ease-out;
 }
 
-.btn-gen:active{transform:scale(0.97);}
+.btn-gen-icon{
+width:22px;
+height:22px;
+border-radius:999px;
+border:1px solid rgba(56,189,248,0.8);
+display:inline-flex;
+align-items:center;
+justify-content:center;
+font-size:11px;
+background:radial-gradient(circle at 0 0,rgba(56,189,248,0.45),rgba(15,23,42,1));
+box-shadow:
+ 0 0 0 1px rgba(15,23,42,1),
+ 0 0 12px rgba(56,189,248,0.8);
+}
 
-/* POSTER AREA */
+.btn-gen-label{
+font-size:14px;
+text-transform:uppercase;
+letter-spacing:.16em;
+}
+
+.btn-gen:hover{
+transform:translateY(-1px);
+filter:brightness(1.05);
+box-shadow:
+ 0 18px 40px rgba(8,47,73,1),
+ 0 0 0 1px rgba(34,211,238,0.85);
+}
+
+.btn-gen:active{
+transform:translateY(0);
+filter:brightness(.97);
+box-shadow:
+ 0 10px 24px rgba(8,47,73,0.9),
+ 0 0 0 1px rgba(34,211,238,0.8);
+}
+
+.btn-gen:disabled{
+opacity:.7;
+cursor:default;
+transform:none;
+box-shadow:
+ 0 10px 22px rgba(8,47,73,0.7),
+ 0 0 0 1px rgba(34,211,238,0.45);
+}
+
+/* POSTER AREA CONTAINER (UI ONLY) */
 #output-area{
+width:100%;
+max-width:960px;
 display:flex;
 flex-direction:column;
-gap:50px;
+gap:32px;
 align-items:center;
+padding-bottom:40px;
 }
 
 .poster-wrapper{
@@ -161,23 +273,80 @@ word-wrap:break-word;
 .card-main.no-header .body-box{padding-top:100px;}
 
 .dl-btn{
-background:#ff0055;
-color:white;
-padding:15px 45px;
-border-radius:50px;
-font-weight:900;
+position:relative;
+background:
+ linear-gradient(#020617,#020617) padding-box,
+ linear-gradient(120deg,#22d3ee,#6366f1,#22c55e) border-box;
+color:#e5e7eb;
+padding:10px 22px;
+border-radius:999px;
+font-weight:700;
 cursor:pointer;
-border:none;
-margin-top:25px;
+border:1px solid transparent;
+margin-top:4px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+font-size:13px;
+letter-spacing:.16em;
+text-transform:uppercase;
+box-shadow:
+ 0 12px 28px rgba(15,23,42,0.96),
+ 0 0 0 1px rgba(15,23,42,0.9);
+transition:transform .08s ease-out,box-shadow .12s ease-out,filter .12s ease-out,background .15s ease-out;
+}
+
+.dl-btn::before{
+content:"⬇";
+font-size:12px;
+opacity:.9;
+}
+
+.dl-btn:hover{
+transform:translateY(-1px);
+filter:brightness(1.05);
+box-shadow:
+ 0 16px 34px rgba(15,23,42,1),
+ 0 0 0 1px rgba(30,64,175,0.9);
+}
+
+.dl-btn:active{
+transform:translateY(0);
+filter:brightness(.97);
+box-shadow:
+ 0 10px 22px rgba(15,23,42,0.9),
+ 0 0 0 1px rgba(30,64,175,0.85);
 }
 
 /* MOBILE */
 @media(max-width:600px){
-body{padding:12px;}
-.admin-panel{padding:18px;}
-.admin-title{font-size:22px;}
-textarea{height:180px;font-size:17px;}
-.btn-gen{font-size:17px;padding:16px;}
+body{
+padding:12px;
+}
+.admin-panel{
+max-width:100%;
+padding:16px 12px 14px;
+border-radius:20px;
+margin-bottom:18px;
+}
+.admin-title{
+font-size:17px;
+}
+.admin-subtitle{
+font-size:11px;
+}
+textarea{
+height:190px;
+font-size:14px;
+}
+.btn-gen{
+font-size:14px;
+padding:12px;
+}
+#output-area{
+gap:26px;
+}
 }
 </style>
 </head>
@@ -186,10 +355,11 @@ textarea{height:180px;font-size:17px;}
 
 <div class="admin-panel">
 <div class="admin-title">Mnyilinga Precision v19.0</div>
+<div class="admin-subtitle">Bandika hadithi yako kisha gusa kitufe chini kuzalisha posters za HD.</div>
 <div class="input-box">
 <textarea id="txtIn" placeholder="Bandika hadithi hapa..."></textarea>
 </div>
-<button class="btn-gen" onclick="run()">GENERATE POSTERS</button>
+<button class="btn-gen" onclick="run()"><span class="btn-gen-icon">⚡</span><span class="btn-gen-label">Generate posters</span></button>
 </div>
 
 <div id="output-area"></div>
