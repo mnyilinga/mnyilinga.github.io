@@ -23,6 +23,7 @@ body {
 
 
 
+
         :root {
             --bg-dark: #010307;
             --accent-neon: #00f2fe;
@@ -155,6 +156,17 @@ body {
             animation: spin 1s linear infinite; margin: 0 auto;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Overlay for edit loading state */
+        .edit-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
 
 
 
@@ -569,7 +581,7 @@ body {
             <a href="https://x.com/siri" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
             <a href="https://instagram.com/siri" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="https://tiktok.com/@siri" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-            <a href="https://linkedin.com/company/siri" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://youtube.com/@siri" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
             <a href="https://threads.net/@siri" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
         </div>
 
@@ -602,7 +614,7 @@ body {
             <a href="#">Newsletters</a>
         </div>
         <div class="copyright-text">
-            © 2026 Siri Board Network. A Mnyilinga Discovery Company. All Rights Reserved.<br>
+            © 2026 Siri Board Network. A Mnyilinga Company. All Rights Reserved.<br>
             Siri Board ™ & © 2026 Mnyilinga Digital.
         </div>
     </div>
@@ -705,8 +717,8 @@ body {
                                 <i class="far fa-copy"></i> Copy
                             </button>
                         </div>
-                        <button class="action-btn" onclick="shareWa('${msg.id}')" style="color: #25d366">
-                            <i class="fab fa-whatsapp"></i> Share
+                        <button class="action-btn edit-btn" onclick="shareWa('${msg.id}')">
+                            <i class="fas fa-pen-to-square"></i> Edit
                         </button>
                     </div>
                 `;
@@ -777,11 +789,16 @@ function copyText(id) {
         .catch(() => showGlassNotification("⚠️ Haikuweza kunakili, jaribu tena!"));
 }
 
-// --- SHARE FUNCTION (WhatsApp) ---
+// --- EDIT FUNCTION (5s loading then go to editor) ---
 function shareWa(id) {
-    const text = document.getElementById(`content-${id}`).innerText;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n\nSoma siri zaidi hapa: [LINK]")}`);
-    showGlassNotification("📤 Ujumbe ume-share WhatsApp!");
+    const overlay = document.createElement("div");
+    overlay.className = "edit-overlay";
+    overlay.innerHTML = '<div class="spinner"></div>';
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+        window.location.href = "https://mnyilinga.co.tz/siri/editor";
+    }, 5000);
 }
 
 
@@ -798,16 +815,7 @@ function shareWa(id) {
 
 
 
-    function shareWa(id) { 
-        const content = document.getElementById(`content-${id}`).innerText;
-        // Badilisha [LINK] na link halisi ya page
-        const waLink = "https://mnyilinga.co.tz/siri/admins"; 
-        const message = `Soma mikasa mizito ya maisha ya watu hapa: ${waLink}`; // Hii ni direct link
-        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
-
-        // Onyesha notification
-        showGlassNotification("📤 Ujumbe ume-share WhatsApp!");
-    }
+    // duplicate shareWa removed (now using the global one above)
 
     // 7. AUTO-REFRESH TIMER
     let timeLeft = 300; // 5 minutes
@@ -897,8 +905,8 @@ function renderUI(data) {
                         <i class="far fa-copy"></i> Copy
                     </button>
                 </div>
-                <button class="action-btn" onclick="shareWa('${msg.id}')" style="color: #25d366">
-                    <i class="fab fa-whatsapp"></i> Share
+                <button class="action-btn edit-btn" onclick="shareWa('${msg.id}')">
+                    <i class="fas fa-pen-to-square"></i> Edit
                 </button>
             </div>
         `;
@@ -953,59 +961,7 @@ function toggleReadMore(id, btn) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </body>
