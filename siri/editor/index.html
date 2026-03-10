@@ -28,7 +28,6 @@ padding:20px;
 }
 
 /* ADMIN PANEL */
-
 .admin-panel{
 width:100%;
 max-width:900px;
@@ -70,9 +69,7 @@ padding:15px;
 line-height:1.5;
 }
 
-textarea::placeholder{
-color:#666;
-}
+textarea::placeholder{color:#666;}
 
 .btn-gen{
 width:100%;
@@ -88,12 +85,9 @@ color:#000;
 transition:0.2s;
 }
 
-.btn-gen:active{
-transform:scale(0.97);
-}
+.btn-gen:active{transform:scale(0.97);}
 
 /* POSTER AREA */
-
 #output-area{
 display:flex;
 flex-direction:column;
@@ -178,31 +172,12 @@ margin-top:25px;
 }
 
 /* MOBILE */
-
 @media(max-width:600px){
-
-body{
-padding:12px;
-}
-
-.admin-panel{
-padding:18px;
-}
-
-.admin-title{
-font-size:22px;
-}
-
-textarea{
-height:180px;
-font-size:17px;
-}
-
-.btn-gen{
-font-size:17px;
-padding:16px;
-}
-
+body{padding:12px;}
+.admin-panel{padding:18px;}
+.admin-title{font-size:22px;}
+textarea{height:180px;font-size:17px;}
+.btn-gen{font-size:17px;padding:16px;}
 }
 </style>
 </head>
@@ -210,160 +185,105 @@ padding:16px;
 <body>
 
 <div class="admin-panel">
-
-<div class="admin-title">Mnyilinga Precision v18.0</div>
-
+<div class="admin-title">Mnyilinga Precision v19.0</div>
 <div class="input-box">
 <textarea id="txtIn" placeholder="Bandika hadithi hapa..."></textarea>
 </div>
-
 <button class="btn-gen" onclick="run()">GENERATE POSTERS</button>
-
 </div>
 
 <div id="output-area"></div>
 
 <script>
-
 const TEXT_WIDTH = 800;
 const BOX_MAX_H = 600;
 const FONT_SIZE = 38;
 const LINE_HEIGHT = 1.4;
 
 function run(){
-
 const raw=document.getElementById('txtIn').value;
 const output=document.getElementById('output-area');
 output.innerHTML='';
-
 if(!raw.trim()) return;
-
 const pages=calculatePages(raw);
-
 pages.forEach((page,i)=>{
 renderPoster(page,i+1);
 });
-
 }
 
 function calculatePages(text){
-
 const canvas=document.createElement('canvas');
 const ctx=canvas.getContext('2d');
-
 ctx.font=`700 ${FONT_SIZE}pt 'Inter'`;
-
 const words=text.split(/\s+/);
-
 let pages=[];
 let currentLines=[];
 let currentLine="";
-
 words.forEach(word=>{
-
 let testLine=currentLine===""?word:currentLine+" "+word;
-
 if(ctx.measureText(testLine).width>TEXT_WIDTH){
-
 if((currentLines.length+1)*(FONT_SIZE*LINE_HEIGHT*1.33)>BOX_MAX_H){
-
 pages.push([...currentLines]);
 currentLines=[currentLine];
 currentLine=word;
-
 }else{
-
 currentLines.push(currentLine);
 currentLine=word;
-
 }
-
 }else{
-
 currentLine=testLine;
-
 }
-
 });
-
 if(currentLine) currentLines.push(currentLine);
 if(currentLines.length>0) pages.push(currentLines);
-
 return pages;
-
 }
 
+// DOWNLOAD FUNCTION WITH TIMESTAMP TO AVOID "Download file again" popup
 function downloadImage(url,name){
-
+const timestamp=new Date().toISOString().replace(/[:.]/g,'-'); // readable timestamp
+const fullName=name.replace('.png',`_${timestamp}.png`);
 const a=document.createElement("a");
 a.href=url;
-a.download=name;
-
+a.download=fullName;
 document.body.appendChild(a);
 a.click();
 document.body.removeChild(a);
-
 }
 
 function renderPoster(data,n){
-
 const group=document.createElement('div');
 group.style.textAlign='center';
-
 const frame=document.createElement('div');
 frame.className='poster-wrapper';
 frame.id=`frame-${n}`;
-
 frame.innerHTML=`
-
 <div class="card-main">
-
 <div class="header"><h1>Siri za chumbani</h1></div>
-
 <div class="body-box">
 <p class="story-text">${data.join('\n')}</p>
 </div>
-
 </div>
-
 `;
-
 const btn=document.createElement('button');
-
 btn.className='dl-btn';
 btn.innerText=`DOWNLOAD POSTER ${n}`;
-
 btn.onclick=()=>{
-
 htmlToImage.toPng(frame,{
 pixelRatio:3,
 backgroundColor:"#ffffff",
 width:1080,
 height:1350,
 cacheBust:true,
-style:{
-transform:'scale(1)',
-transformOrigin:'top left'
-}
+style:{transform:'scale(1)',transformOrigin:'top left'}
 })
-
-.then(url=>{
-downloadImage(url,`Mnyilinga_Poster_${n}.png`);
-})
-
-.catch(err=>{
-alert("Download imegoma: "+err);
-});
-
+.then(url=>{downloadImage(url,`Mnyilinga_Poster_${n}.png`);})
+.catch(err=>{alert("Download imegoma: "+err);});
 };
-
 group.appendChild(frame);
 group.appendChild(btn);
-
 document.getElementById('output-area').appendChild(group);
-
 }
-
 </script>
 
 </body>
