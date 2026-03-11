@@ -1,346 +1,413 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mnyilinga News Admin Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto&display=swap" rel="stylesheet">
-<style>
-:root {
-    --primary: #1d4ed8;
-    --secondary: #f97316;
-    --accent: #10b981;
-    --bg: #f0f5ff;
-    --card-bg: #ffffff;
-    --text-dark: #1f2937;
-    --text-light: #64748b;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mnyilinga News | Professional Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #0f172a; /* Navy Dark */
+            --brand-accent: #2563eb;  /* Electric Blue */
+            --brand-success: #059669;
+            --surface-bg: #f8fafc;
+            --card-white: #ffffff;
+            --border-color: #e2e8f0;
+            --text-title: #0f172a;
+            --text-body: #475569;
+            --input-focus: #dbeafe;
+        }
 
-* { box-sizing: border-box; }
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
 
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: var(--bg);
-    display: flex;
-    justify-content: center;
-    padding: 30px;
-}
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--surface-bg);
+            background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: var(--text-body);
+        }
 
-.container {
-    width: 100%;
-    max-width: 720px;
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 30px 40px;
-}
+        .admin-card {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+        }
 
-h2 {
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 30px;
-    font-size: 28px;
-    font-weight: 700;
-}
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-/* -------- Image Upload -------- */
-.upload-card {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .header-section h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-title);
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
 
-.drop-area {
-    border: 2px dashed #ccc;
-    border-radius: 16px;
-    padding: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    background: linear-gradient(135deg, #e0f2fe, #fef9c3);
-}
+        .header-section p {
+            font-size: 14px;
+            color: var(--text-body);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
 
-.drop-area.active {
-    border-color: var(--primary);
-    background-color: #dbeafe;
-}
+        /* -------- Advanced Upload Area -------- */
+        .upload-container {
+            margin-bottom: 30px;
+        }
 
-.upload-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
-}
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
 
-.text-info { font-size: 16px; color: #333; margin-bottom: 8px; }
-.text-info span { color: var(--primary); font-weight: bold; cursor: pointer; }
-.support-text { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-#preview-img { max-width: 100%; max-height: 180px; display: none; margin: 10px auto; border-radius: 8px; }
-#file-input { display: none; }
+        .drop-zone:hover, .drop-zone.active {
+            border-color: var(--brand-accent);
+            background: #f0f7ff;
+        }
 
-/* -------- Category Dropdown -------- */
-:root {
-    --dropdown-primary: #4A90E2;
-    --dropdown-text: #444;
-}
+        .upload-svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+            stroke: var(--brand-accent);
+        }
 
-.select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
-.select-btn {
-    background: #fff;
-    padding: 15px 20px;
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    color: var(--dropdown-text);
-    transition: all 0.3s ease;
-    border: 1px solid #cbd5e1;
-}
-.select-btn:active { transform: scale(0.98); }
-.select-btn i {
-    border: solid #999;
-    border-width: 0 2px 2px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(45deg);
-    transition: 0.3s;
-}
-.select-wrapper.active .select-btn i { transform: rotate(-135deg); }
+        .upload-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-title);
+        }
 
-.options-list {
-    position: absolute;
-    width: 100%;
-    background: #fff;
-    margin-top: 10px;
-    border-radius: 12px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease;
-    z-index: 10;
-    border: 1px solid #cbd5e1;
-    box-shadow: none;
-}
-.select-wrapper.active .options-list {
-    max-height: 300px;
-    padding: 10px 0;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    overflow-y: auto;
-}
-.options-list::-webkit-scrollbar { width: 8px; }
-.options-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
-.options-list::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 8px; }
-.options-list::-webkit-scrollbar-thumb:hover { background: #1e40af; }
+        .upload-text span {
+            color: var(--brand-accent);
+            text-decoration: underline;
+            font-weight: 600;
+        }
 
-.option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.option:hover { background-color: #f0f7ff; }
-.option-text { font-size: 16px; color: var(--dropdown-text); }
-.radio-circle {
-    height: 20px;
-    width: 20px;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s;
-}
-.option.selected .radio-circle { border-color: var(--dropdown-primary); }
-.option.selected .radio-circle::after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    background: var(--dropdown-primary);
-    border-radius: 50%;
-}
+        #preview-img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            display: none;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+        }
 
-/* -------- Text Inputs -------- */
-.form-group { margin-bottom: 20px; }
-label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); }
-input[type="text"], textarea {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 12px;
-    border: 1px solid #cbd5e1;
-    font-size: 16px;
-    transition: 0.2s;
-    font-family: 'Roboto', sans-serif;
-}
-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
-input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+        /* -------- Custom Inputs -------- */
+        .form-row { margin-bottom: 24px; position: relative; }
+        label { 
+            display: block; 
+            margin-bottom: 10px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: var(--text-title);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-/* -------- Terms Checkbox -------- */
-.terms-group { display: flex; align-items: center; gap: 12px; cursor: pointer; margin-bottom: 20px; user-select: none; font-weight: 500; color: var(--text-dark); }
-.terms-group input[type="checkbox"] { position: absolute; opacity: 0; height:0;width:0; }
-.checkmark { height: 24px; width: 24px; background-color: #fff; border: 2px solid #ccc; border-radius: 4px; position: relative; transition: all 0.3s ease; }
-.terms-group input:checked ~ .checkmark { background-color: #008CBA; border-color: #008CBA; }
-.checkmark:after { content: ""; position: absolute; display: none; }
-.terms-group input:checked ~ .checkmark:after { display: block; }
-.terms-group .checkmark:after { left: 8px; top: 4px; width: 5px; height: 10px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.terms-group a { color: #3a8e9d; text-decoration: none; }
-.terms-group a:hover { text-decoration: underline; }
+        input[type="text"], textarea, .select-display {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border-color);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
 
-/* -------- PUSH NEWS -------- */
-.btn-post {
-    width: 100%;
-    background: var(--secondary);
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 16px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn-post:hover { background: #ea580c; }
-.btn-post:disabled { background: #94a3b8; cursor: not-allowed; }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--brand-accent);
+            background: #fff;
+            box-shadow: 0 0 0 4px var(--input-focus);
+        }
 
-#loader { display: none; text-align: center; margin-top: 15px; font-weight: bold; color: var(--primary); }
-</style>
+        textarea { min-height: 140px; line-height: 1.6; resize: none; }
+
+        /* -------- Clean Dropdown -------- */
+        .custom-select { position: relative; cursor: pointer; }
+        .select-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-height: 0;
+            overflow: hidden;
+            z-index: 100;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-select.active .dropdown-menu { max-height: 260px; padding: 10px 0; }
+
+        .menu-item {
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            background: var(--brand-accent);
+            color: #fff;
+        }
+
+        /* -------- Checkbox UI -------- */
+        .check-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 32px 0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            position: relative;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        input:checked ~ .custom-checkbox {
+            background: var(--brand-accent);
+            border-color: var(--brand-accent);
+        }
+
+        .custom-checkbox::after {
+            content: '';
+            position: absolute;
+            left: 6px; top: 2px;
+            width: 5px; height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        input:checked ~ .custom-checkbox::after { display: block; }
+
+        /* -------- Submit Button -------- */
+        .submit-btn {
+            width: 100%;
+            background: var(--brand-primary);
+            color: #fff;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        #loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--brand-accent);
+        }
+
+        #file-input { display: none; }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Mnyilinga News Admin</h2>
+<div class="admin-card">
+    <div class="header-section">
+        <h2>Mnyilinga News</h2>
+        <p>Console ya Usimamizi</p>
+    </div>
 
-    <!-- Image Upload -->
-    <div class="upload-card">
-        <div class="drop-area" id="drop-area">
-            <img src="https://cdn-icons-png.flaticon.com/512/3342/3342137.png" alt="Upload Icon" class="upload-icon">
-            <p class="text-info">Drop your image here, or <span id="browse-btn">browse</span></p>
-            <p class="support-text">Supports: JPG, JPEG2000, PNG</p>
+    <div class="upload-container">
+        <label>Picha ya Habari</label>
+        <div class="drop-zone" id="drop-area">
+            <svg class="upload-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+            </svg>
+            <p class="upload-text">Drag picha hapa au <span id="browse-btn">tafuta kwenye faili</span></p>
             <img id="preview-img" src="#" alt="Preview">
             <input type="file" id="file-input" accept="image/*">
         </div>
     </div>
 
-    <!-- Category -->
-    <div class="form-group">
-        <label>Jamii ya Habari (Category)</label>
-        <div class="select-wrapper" id="dropdown">
-            <div class="select-btn">
-                <span id="selected-text">Chagua Category</span>
-                <i></i>
+    <div class="form-row">
+        <label>Kundi la Habari</label>
+        <div class="custom-select" id="dropdown">
+            <div class="select-display">
+                <span id="selected-text">Chagua Jamii ya Habari...</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
             </div>
-            <div class="options-list">
-                <div class="option" data-value="Michezo"><span class="option-text">Michezo</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Siasa"><span class="option-text">Siasa</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Mapenzi"><span class="option-text">Mapenzi</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Afya"><span class="option-text">Afya</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Dini"><span class="option-text">Dini</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Mazingira"><span class="option-text">Mazingira</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Kilimo"><span class="option-text">Kilimo</span><span class="radio-circle"></span></div>
-                <div class="option" data-value="Technology"><span class="option-text">Technology</span><span class="radio-circle"></span></div>
+            <div class="dropdown-menu">
+                <div class="menu-item" data-value="Michezo">Michezo</div>
+                <div class="menu-item" data-value="Siasa">Siasa</div>
+                <div class="menu-item" data-value="Teknolojia">Teknolojia</div>
+                <div class="menu-item" data-value="Biashara">Biashara</div>
+                <div class="menu-item" data-value="Burudani">Burudani</div>
+                <div class="menu-item" data-value="Afya">Afya</div>
             </div>
         </div>
     </div>
 
-    <!-- Headline & Article -->
-    <div class="form-group">
-        <label>Kichwa cha Habari (Headline)</label>
-        <input type="text" id="newsHeadline" placeholder="Andika kichwa cha habari hapa...">
+    <div class="form-row">
+        <label>Kichwa cha Habari</label>
+        <input type="text" id="newsHeadline" placeholder="Andika kichwa cha habari kwa ufupi...">
     </div>
 
-    <div class="form-group">
-        <label>Habari Kamili (Article Body)</label>
-        <textarea id="newsArticle" placeholder="Andika habari yako hapa..."></textarea>
+    <div class="form-row">
+        <label>Habari Kamili</label>
+        <textarea id="newsArticle" placeholder="Andika maelezo yote ya habari hapa..."></textarea>
     </div>
 
-    <!-- Terms -->
-    <label class="terms-group">
-        <input type="checkbox" id="termsCheckbox">
-        <span class="checkmark"></span>
-        <span>Nimekubali <a href="#">vigezo na masharti</a></span>
+    <label class="check-container">
+        <input type="checkbox" id="termsCheckbox" style="display:none">
+        <div class="custom-checkbox"></div>
+        <span>Nimehakiki kuwa taarifa hizi ni sahihi</span>
     </label>
 
-    <!-- Button -->
-    <button class="btn-post" id="postBtn" disabled onclick="submitNews()">PUSH NEWS</button>
-    <div id="loader">Inatuma habari... Tafadhali subiri.</div>
+    <button class="submit-btn" id="postBtn" disabled onclick="submitNews()">
+        PUBLISH ARTICLE
+    </button>
+    <div id="loader">Processing... Tunatuma habari kwenye mfumo</div>
 </div>
 
 <script>
-// Image Upload Logic
-const dropArea = document.getElementById('drop-area');
-const fileInput = document.getElementById('file-input');
-const browseBtn = document.getElementById('browse-btn');
-const previewImg = document.getElementById('preview-img');
-browseBtn.onclick = () => fileInput.click();
-fileInput.addEventListener('change', function(){ showFile(this.files[0]); });
-dropArea.addEventListener('dragover', (event)=>{ event.preventDefault(); dropArea.classList.add('active'); });
-dropArea.addEventListener('dragleave', ()=>{ dropArea.classList.remove('active'); });
-dropArea.addEventListener('drop', (event)=>{ event.preventDefault(); dropArea.classList.remove('active'); showFile(event.dataTransfer.files[0]); });
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('file-input');
+    const browseBtn = document.getElementById('browse-btn');
+    const previewImg = document.getElementById('preview-img');
+    const dropdown = document.getElementById('dropdown');
+    const selectedText = document.getElementById('selected-text');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const postBtn = document.getElementById('postBtn');
+    const termsCheckbox = document.getElementById('termsCheckbox');
 
-function showFile(file){
-    let fileType = file.type;
-    let validExtensions = ['image/jpeg','image/jpg','image/png'];
-    if(validExtensions.includes(fileType)){
-        let reader = new FileReader();
-        reader.onload = ()=>{ previewImg.src = reader.result; previewImg.style.display='block'; };
-        reader.readAsDataURL(file);
-    } else { alert("Hili sio faili la picha! Tafadhali weka JPG au PNG."); dropArea.classList.remove('active'); }
-}
+    // Upload functionality
+    browseBtn.onclick = () => fileInput.click();
+    fileInput.onchange = (e) => handleFile(e.target.files[0]);
 
-// Dropdown Logic
-const wrapper = document.getElementById('dropdown');
-const selectBtn = wrapper.querySelector('.select-btn');
-const options = wrapper.querySelectorAll('.option');
-const selectedText = document.getElementById('selected-text');
-selectBtn.addEventListener('click', ()=> wrapper.classList.toggle('active'));
-options.forEach(option=>{
-    option.addEventListener('click', ()=>{
-        options.forEach(opt=>opt.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedText.innerText = option.getAttribute('data-value');
-        wrapper.classList.remove('active');
-    });
-});
-window.addEventListener('click',(e)=>{ if(!wrapper.contains(e.target)) wrapper.classList.remove('active'); });
+    dropArea.ondragover = (e) => { e.preventDefault(); dropArea.classList.add('active'); };
+    dropArea.ondragleave = () => dropArea.classList.remove('active');
+    dropArea.ondrop = (e) => { e.preventDefault(); dropArea.classList.remove('active'); handleFile(e.dataTransfer.files[0]); };
 
-// Terms checkbox logic
-const termsCheckbox = document.getElementById('termsCheckbox');
-const postBtn = document.getElementById('postBtn');
-termsCheckbox.addEventListener('change', ()=> postBtn.disabled = !termsCheckbox.checked);
-
-// PUSH NEWS Logic
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRU38CN-Xnu7FOokZ7bzKXrxljegpDtpUPmRWCm06zBDEFfUl0ftbOlNUUNX_nAs5u/exec';
-const IMGBB_API_KEY = '65bd20fae1600fa1dad6725e9bda';
-
-async function submitNews(){
-    const file = fileInput.files[0];
-    const category = document.querySelector('.option.selected')?.getAttribute('data-value');
-    const headline = document.getElementById('newsHeadline').value;
-    const article = document.getElementById('newsArticle').value;
-
-    if(!file || !headline || !article || !category){
-        alert("Tafadhali jaza sehemu zote na chagua picha!"); return;
+    function handleFile(file) {
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => { previewImg.src = e.target.result; previewImg.style.display = 'block'; };
+            reader.readAsDataURL(file);
+        }
     }
 
-    postBtn.disabled = true;
-    document.getElementById('loader').style.display='block';
-    document.getElementById('loader').innerText="🚀 Inapakia picha ImgBB...";
+    // Dropdown toggle
+    dropdown.onclick = () => dropdown.classList.toggle('active');
+    menuItems.forEach(item => {
+        item.onclick = (e) => {
+            selectedText.innerText = e.target.getAttribute('data-value');
+            dropdown.classList.remove('active');
+        };
+    });
 
-    try{
-        let formData = new FormData();
-        formData.append("image",file);
-        let imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,{method:"POST",body:formData});
-        let imgbbData = await imgbbResponse.json();
-        let imageUrl = imgbbData.data.url;
-        document.getElementById('loader').innerText="✅ Picha imekubaliwa! Inahifadhi kwenye Google Sheets...";
-        await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({"picha_url":imageUrl,"category":category,"headline":headline,"article":article})});
-        alert("🎊 Hongera! Habari imechapishwa kikamilifu."); location.reload();
-    } catch(err){ console.error(err); alert("Oops! Hitilafu imetokea. Jaribu tena."); }
-    finally { postBtn.disabled=false; document.getElementById('loader').style.display='none'; }
-}
+    window.onclick = (e) => { if (!dropdown.contains(e.target)) dropdown.classList.remove('active'); };
+
+    // Enable button
+    termsCheckbox.onchange = () => postBtn.disabled = !termsCheckbox.checked;
+
+    // Submission logic
+    async function submitNews() {
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRU38CN-Xnu7FOokZ7bzKXrxljegpDtpUPmRWCm06zBDEFfUl0ftbOlNUUNX_nAs5u/exec';
+        const IMGBB_API_KEY = '65bd20fae1600fa1dad6725e9bda';
+
+        const file = fileInput.files[0];
+        const category = selectedText.innerText;
+        const headline = document.getElementById('newsHeadline').value;
+        const article = document.getElementById('newsArticle').value;
+
+        if(!file || headline === "" || category === "Chagua Jamii ya Habari...") {
+            alert("Tafadhali kamilisha sehemu zote!");
+            return;
+        }
+
+        postBtn.disabled = true;
+        document.getElementById('loader').style.display = 'block';
+
+        try {
+            let formData = new FormData();
+            formData.append("image", file);
+            let imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {method:"POST", body:formData});
+            let imgData = await imgRes.json();
+            
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method:"POST", 
+                mode:"no-cors", 
+                body: JSON.stringify({
+                    "picha_url": imgData.data.url,
+                    "category": category,
+                    "headline": headline,
+                    "article": article
+                })
+            });
+            alert("Habari imechapishwa kikamilifu!");
+            location.reload();
+        } catch(e) {
+            alert("Hitilafu imetokea. Jaribu tena.");
+            postBtn.disabled = false;
+        }
+    }
 </script>
 </body>
 </html>
