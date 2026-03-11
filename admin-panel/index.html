@@ -147,9 +147,10 @@
             width: 100%; background: linear-gradient(135deg, var(--primary), #000);
             color: #fff; padding: 16px; border: 1px solid rgba(255,255,255,0.14);
             border-radius: 18px; font-size: 15px; font-weight: 900; text-transform: uppercase;
-            cursor: pointer;
+            cursor: pointer; transition: 0.3s;
         }
-        .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .publish-btn:active { transform: scale(0.98); }
+        .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         #status-msg {
             text-align: center; margin-top: 12px; font-size: 13px; font-weight: 850;
@@ -214,7 +215,7 @@
             </label>
 
             <button class="publish-btn" id="submitBtn" disabled onclick="handlePublish()">Push This Post</button>
-            <div id="status-msg">Inapakia...</div>
+            <div id="status-msg">Inashughulikia...</div>
         </section>
     </main>
 </div>
@@ -259,54 +260,64 @@
 
     // 4. Submit Logic
     async function handlePublish() {
+        // Hizi ndizo kamba zinazounganisha kila kitu
         const GOOGLE_URL = 'https://script.google.com/macros/s/AKfycbxRU38CN-Xnu7FOokZ7bzKXrxljegpDtpUPmRWCm06zBDEFfUl0ftbOlNUUNX_nAs5u/exec';
-        const IMGBB_KEY = '65bd20fae1600fa1dad6725e9bda';
+        const IMGBB_KEY = '65bd20fae1600fa1dad6725e9bda2c7a'; // Key yako ya herufi 32
 
         const file = fileInput.files[0];
         const category = catSelected.innerText;
         const headlineText = document.getElementById('headline').value.trim();
         const articleText = document.getElementById('article').value.trim();
 
+        // Uhakiki wa mwisho
         if(!file || headlineText === "" || category === "Chagua category...") {
-            alert("Tafadhali kamilisha fomu!"); return;
+            alert("Tafadhali kamilisha fomu! (Hakikisha umechagua picha na category)"); 
+            return;
         }
 
         submitBtn.disabled = true;
         statusMsg.style.display = 'block';
-        statusMsg.innerText = "Inapakia picha...";
+        statusMsg.innerText = "Inapakia picha (Step 1/2)...";
 
         try {
-            // Step 1: ImgBB
+            // STEP 1: PAKIA PICHA IMGBB
             let fd = new FormData();
             fd.append("image", file);
-            let imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {method:"POST", body:fd});
+            let imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+                method: "POST",
+                body: fd
+            });
             let imgData = await imgRes.json();
             
-            if(!imgData.success) throw new Error("ImgBB error");
+            if(!imgData.success) {
+                throw new Error("ImgBB Error: " + (imgData.error ? imgData.error.message : "Picha imekataliwa"));
+            }
 
-            statusMsg.innerText = "Inatuma habari kwenye Sheet...";
+            statusMsg.innerText = "Inahifadhi kwenye Google Sheet (Step 2/2)...";
 
-            // Step 2: Google Sheets
-            // Tunatumia JSON string na Content-Type: text/plain ili kuepuka CORS block
-            const dataToPost = {
+            // STEP 2: TUMA DATA GOOGLE SHEETS
+            const payload = {
                 "picha_url": imgData.data.url,
                 "category": category,
                 "headline": headlineText,
                 "article": articleText
             };
 
+            // Tunatumia mode: 'no-cors' na text/plain ili kupita salama bila CORS errors
             await fetch(GOOGLE_URL, {
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "text/plain" },
-                body: JSON.stringify(dataToPost)
+                body: JSON.stringify(payload)
             });
 
-            alert("Habari imetumwa kikamilifu!");
+            // Kwa kuwa tunatumia no-cors, tunachukulia imefanikiwa ikiwa hakuna error hapo juu
+            alert("Hongera Mnyilinga! Habari imetumbukia kwenye Sheet kikamilifu.");
             location.reload();
 
         } catch(e) {
-            alert("Kuna tatizo limetokea. Jaribu tena.");
+            console.error(e);
+            alert("Hitilafu: " + e.message);
             submitBtn.disabled = false;
             statusMsg.style.display = 'none';
         }
