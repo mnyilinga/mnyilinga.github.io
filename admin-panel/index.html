@@ -1,109 +1,251 @@
 <!DOCTYPE html>
 <html lang="sw">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mnyilinga News Portal | Dashboard</title>
-    <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #64748b;
-            --success: #059669;
-            --bg: #f1f5f9;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mnyilinga News Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #1d4ed8;
+    --secondary: #f97316;
+    --accent: #10b981;
+    --bg: #f0f5ff;
+    --card-bg: #ffffff;
+    --text-dark: #1f2937;
+    --text-light: #64748b;
+}
 
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
+* { box-sizing: border-box; }
 
-        .container {
-            background: white;
-            width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
 
-        h2 { color: #1e293b; text-align: center; margin-top: 0; }
+.container {
+    width: 100%;
+    max-width: 720px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 30px 40px;
+}
 
-        .form-group { margin-bottom: 20px; }
+h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
 
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #334155; }
+/* -------- Image Upload -------- */
+.upload-card {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        input[type="text"], select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
+.drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 16px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background: linear-gradient(135deg, #e0f2fe, #fef9c3);
+}
 
-        .image-preview-box {
-            width: 100%;
-            height: 200px;
-            border: 2px dashed #cbd5e1;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
+.drop-area.active {
+    border-color: var(--primary);
+    background-color: #dbeafe;
+}
 
-        #previewImg { width: 100%; height: 100%; object-fit: cover; display: none; }
+.upload-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
 
-        .btn-post {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+.text-info { font-size: 16px; color: #333; margin-bottom: 8px; }
+.text-info span { color: var(--primary); font-weight: bold; cursor: pointer; }
+.support-text { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+#preview-img { max-width: 100%; max-height: 180px; display: none; margin: 10px auto; border-radius: 8px; }
+#file-input { display: none; }
 
-        .btn-post:hover { background: #1d4ed8; }
-        .btn-post:disabled { background: #94a3b8; cursor: not-allowed; }
+/* -------- Category Dropdown -------- */
+:root {
+    --dropdown-primary: #4A90E2;
+    --dropdown-text: #444;
+}
 
-        #loader { display: none; text-align: center; margin-top: 15px; font-weight: bold; color: var(--primary); }
-    </style>
+.select-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+.select-btn {
+    background: #fff;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    color: var(--dropdown-text);
+    transition: all 0.3s ease;
+    border: 1px solid #cbd5e1;
+}
+.select-btn:active { transform: scale(0.98); }
+.select-btn i {
+    border: solid #999;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: 0.3s;
+}
+.select-wrapper.active .select-btn i { transform: rotate(-135deg); }
+
+.options-list {
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 12px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    z-index: 10;
+    border: 1px solid #cbd5e1;
+    box-shadow: none;
+}
+.select-wrapper.active .options-list {
+    max-height: 300px;
+    padding: 10px 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+.options-list::-webkit-scrollbar { width: 8px; }
+.options-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
+.options-list::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 8px; }
+.options-list::-webkit-scrollbar-thumb:hover { background: #1e40af; }
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.option:hover { background-color: #f0f7ff; }
+.option-text { font-size: 16px; color: var(--dropdown-text); }
+.radio-circle {
+    height: 20px;
+    width: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+.option.selected .radio-circle { border-color: var(--dropdown-primary); }
+.option.selected .radio-circle::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: var(--dropdown-primary);
+    border-radius: 50%;
+}
+
+/* -------- Text Inputs -------- */
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); }
+input[type="text"], textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    font-size: 16px;
+    transition: 0.2s;
+    font-family: 'Roboto', sans-serif;
+}
+textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+/* -------- Terms Checkbox -------- */
+.terms-group { display: flex; align-items: center; gap: 12px; cursor: pointer; margin-bottom: 20px; user-select: none; font-weight: 500; color: var(--text-dark); }
+.terms-group input[type="checkbox"] { position: absolute; opacity: 0; height:0;width:0; }
+.checkmark { height: 24px; width: 24px; background-color: #fff; border: 2px solid #ccc; border-radius: 4px; position: relative; transition: all 0.3s ease; }
+.terms-group input:checked ~ .checkmark { background-color: #008CBA; border-color: #008CBA; }
+.checkmark:after { content: ""; position: absolute; display: none; }
+.terms-group input:checked ~ .checkmark:after { display: block; }
+.terms-group .checkmark:after { left: 8px; top: 4px; width: 5px; height: 10px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.terms-group a { color: #3a8e9d; text-decoration: none; }
+.terms-group a:hover { text-decoration: underline; }
+
+/* -------- PUSH NEWS -------- */
+.btn-post {
+    width: 100%;
+    background: var(--secondary);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-post:hover { background: #ea580c; }
+.btn-post:disabled { background: #94a3b8; cursor: not-allowed; }
+
+#loader { display: none; text-align: center; margin-top: 15px; font-weight: bold; color: var(--primary); }
+</style>
 </head>
 <body>
 
 <div class="container">
     <h2>Mnyilinga News Admin</h2>
-    
-    <div class="form-group">
-        <label>Picha ya Habari</label>
-        <div class="image-preview-box" onclick="document.getElementById('imageInput').click()">
-            <span id="placeholderTxt">Bonyeza hapa kuchagua picha</span>
-            <img id="previewImg">
+
+    <!-- Image Upload -->
+    <div class="upload-card">
+        <div class="drop-area" id="drop-area">
+            <img src="https://cdn-icons-png.flaticon.com/512/3342/3342137.png" alt="Upload Icon" class="upload-icon">
+            <p class="text-info">Drop your image here, or <span id="browse-btn">browse</span></p>
+            <p class="support-text">Supports: JPG, JPEG2000, PNG</p>
+            <img id="preview-img" src="#" alt="Preview">
+            <input type="file" id="file-input" accept="image/*">
         </div>
-        <input type="file" id="imageInput" accept="image/*" style="display: none;">
     </div>
 
+    <!-- Category -->
     <div class="form-group">
         <label>Jamii ya Habari (Category)</label>
-        <select id="newsCategory">
-            <option value="Siasa">Siasa</option>
-            <option value="Michezo">Michezo</option>
-            <option value="Burudani">Burudani</option>
-            <option value="Teknolojia">Teknolojia</option>
-            <option value="Uchumi">Uchumi</option>
-        </select>
+        <div class="select-wrapper" id="dropdown">
+            <div class="select-btn">
+                <span id="selected-text">Chagua Category</span>
+                <i></i>
+            </div>
+            <div class="options-list">
+                <div class="option" data-value="Michezo"><span class="option-text">Michezo</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Siasa"><span class="option-text">Siasa</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Mapenzi"><span class="option-text">Mapenzi</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Afya"><span class="option-text">Afya</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Dini"><span class="option-text">Dini</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Mazingira"><span class="option-text">Mazingira</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Kilimo"><span class="option-text">Kilimo</span><span class="radio-circle"></span></div>
+                <div class="option" data-value="Technology"><span class="option-text">Technology</span><span class="radio-circle"></span></div>
+            </div>
+        </div>
     </div>
 
+    <!-- Headline & Article -->
     <div class="form-group">
         <label>Kichwa cha Habari (Headline)</label>
         <input type="text" id="newsHeadline" placeholder="Andika kichwa cha habari hapa...">
@@ -111,94 +253,94 @@
 
     <div class="form-group">
         <label>Habari Kamili (Article Body)</label>
-        <textarea id="newsArticle" rows="8" placeholder="Andika habari yako yote hapa..."></textarea>
+        <textarea id="newsArticle" placeholder="Andika habari yako hapa..."></textarea>
     </div>
 
-    <button class="btn-post" id="postBtn" onclick="submitNews()">Chapisha Habari Sasa</button>
+    <!-- Terms -->
+    <label class="terms-group">
+        <input type="checkbox" id="termsCheckbox">
+        <span class="checkmark"></span>
+        <span>Nimekubali <a href="#">vigezo na masharti</a></span>
+    </label>
+
+    <!-- Button -->
+    <button class="btn-post" id="postBtn" disabled onclick="submitNews()">PUSH NEWS</button>
     <div id="loader">Inatuma habari... Tafadhali subiri.</div>
 </div>
 
 <script>
-    const imageInput = document.getElementById('imageInput');
-    const previewImg = document.getElementById('previewImg');
-    const placeholderTxt = document.getElementById('placeholderTxt');
-    const postBtn = document.getElementById('postBtn');
-    const loader = document.getElementById('loader');
+// Image Upload Logic
+const dropArea = document.getElementById('drop-area');
+const fileInput = document.getElementById('file-input');
+const browseBtn = document.getElementById('browse-btn');
+const previewImg = document.getElementById('preview-img');
+browseBtn.onclick = () => fileInput.click();
+fileInput.addEventListener('change', function(){ showFile(this.files[0]); });
+dropArea.addEventListener('dragover', (event)=>{ event.preventDefault(); dropArea.classList.add('active'); });
+dropArea.addEventListener('dragleave', ()=>{ dropArea.classList.remove('active'); });
+dropArea.addEventListener('drop', (event)=>{ event.preventDefault(); dropArea.classList.remove('active'); showFile(event.dataTransfer.files[0]); });
 
-    // Link yako ya Google na ImgBB
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRU38CN-Xnu7FOokZ7bzKXrxljegpDtpUPmRWCm06zBDEFfUl0ftbOlNUUNX_nAs5u/exec';
-    const IMGBB_API_KEY = '65bd20fae1600fa1dad6725e9bda2c7a';
+function showFile(file){
+    let fileType = file.type;
+    let validExtensions = ['image/jpeg','image/jpg','image/png'];
+    if(validExtensions.includes(fileType)){
+        let reader = new FileReader();
+        reader.onload = ()=>{ previewImg.src = reader.result; previewImg.style.display='block'; };
+        reader.readAsDataURL(file);
+    } else { alert("Hili sio faili la picha! Tafadhali weka JPG au PNG."); dropArea.classList.remove('active'); }
+}
 
-    // Onyesha picha pindi inapochaguliwa
-    imageInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImg.src = e.target.result;
-                previewImg.style.display = 'block';
-                placeholderTxt.style.display = 'none';
-            }
-            reader.readAsDataURL(file);
-        }
+// Dropdown Logic
+const wrapper = document.getElementById('dropdown');
+const selectBtn = wrapper.querySelector('.select-btn');
+const options = wrapper.querySelectorAll('.option');
+const selectedText = document.getElementById('selected-text');
+selectBtn.addEventListener('click', ()=> wrapper.classList.toggle('active'));
+options.forEach(option=>{
+    option.addEventListener('click', ()=>{
+        options.forEach(opt=>opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedText.innerText = option.getAttribute('data-value');
+        wrapper.classList.remove('active');
     });
+});
+window.addEventListener('click',(e)=>{ if(!wrapper.contains(e.target)) wrapper.classList.remove('active'); });
 
-    async function submitNews() {
-        const file = imageInput.files[0];
-        const category = document.getElementById('newsCategory').value;
-        const headline = document.getElementById('newsHeadline').value;
-        const article = document.getElementById('newsArticle').value;
+// Terms checkbox logic
+const termsCheckbox = document.getElementById('termsCheckbox');
+const postBtn = document.getElementById('postBtn');
+termsCheckbox.addEventListener('change', ()=> postBtn.disabled = !termsCheckbox.checked);
 
-        if (!file || !headline || !article) {
-            alert("Tafadhali jaza sehemu zote na chagua picha!");
-            return;
-        }
+// PUSH NEWS Logic
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRU38CN-Xnu7FOokZ7bzKXrxljegpDtpUPmRWCm06zBDEFfUl0ftbOlNUUNX_nAs5u/exec';
+const IMGBB_API_KEY = '65bd20fae1600fa1dad6725e9bda';
 
-        // Anza kuonyesha loader
-        postBtn.disabled = true;
-        loader.style.display = 'block';
-        loader.innerText = "🚀 Inapakia picha ImgBB...";
+async function submitNews(){
+    const file = fileInput.files[0];
+    const category = document.querySelector('.option.selected')?.getAttribute('data-value');
+    const headline = document.getElementById('newsHeadline').value;
+    const article = document.getElementById('newsArticle').value;
 
-        try {
-            // 1. Upload Picha kwenda ImgBB
-            let formData = new FormData();
-            formData.append("image", file);
-
-            let imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-                method: "POST",
-                body: formData
-            });
-            let imgbbData = await imgbbResponse.json();
-            let imageUrl = imgbbData.data.url;
-
-            loader.innerText = "✅ Picha imekubaliwa! Inahifadhi kwenye Google Sheets...";
-
-            // 2. Tuma data zote Google Sheets
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors", // Muhimu kwa Google Apps Script
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    "picha_url": imageUrl,
-                    "category": category,
-                    "headline": headline,
-                    "article": article
-                })
-            });
-
-            // 3. Mafanikio
-            alert("🎊 Hongera! Habari imechapishwa kikamilifu.");
-            location.reload(); // Refresh fomu iwe wazi tena
-
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Oops! Hitilafu imetokea. Jaribu tena.");
-        } finally {
-            postBtn.disabled = false;
-            loader.style.display = 'none';
-        }
+    if(!file || !headline || !article || !category){
+        alert("Tafadhali jaza sehemu zote na chagua picha!"); return;
     }
-</script>
 
+    postBtn.disabled = true;
+    document.getElementById('loader').style.display='block';
+    document.getElementById('loader').innerText="🚀 Inapakia picha ImgBB...";
+
+    try{
+        let formData = new FormData();
+        formData.append("image",file);
+        let imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,{method:"POST",body:formData});
+        let imgbbData = await imgbbResponse.json();
+        let imageUrl = imgbbData.data.url;
+        document.getElementById('loader').innerText="✅ Picha imekubaliwa! Inahifadhi kwenye Google Sheets...";
+        await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({"picha_url":imageUrl,"category":category,"headline":headline,"article":article})});
+        alert("🎊 Hongera! Habari imechapishwa kikamilifu."); location.reload();
+    } catch(err){ console.error(err); alert("Oops! Hitilafu imetokea. Jaribu tena."); }
+    finally { postBtn.disabled=false; document.getElementById('loader').style.display='none'; }
+}
+</script>
 </body>
 </html>
