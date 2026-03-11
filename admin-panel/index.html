@@ -220,19 +220,19 @@
 </header>
 
 <div class="field-group">
-    <label>Picha Kuu</label>
+    <label>                </label>
     <div class="upload-zone" onclick="document.getElementById('file-input').click()">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-        <span>Gusa hapa kuweka picha</span>
+        <span>Upload image file</span>
         <img id="preview-img" src="#" alt="Preview">
     </div>
     <input type="file" id="file-input" accept="image/*">
 </div>
 
 <div class="field-group">
-    <label>Jamii ya Habari</label>
+    <label>NEWS CATEGORIES </label>
     <div class="category-trigger" id="catTrigger">
-        <span id="catSelected">Chagua jamii...</span>
+        <span id="catSelected">Categories </span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
     </div>
     <div class="category-list" id="catList">
@@ -260,12 +260,12 @@
 </div>
 
 <div class="field-group">
-    <label>Kichwa cha Habari</label>
+    <label>NEWS HEADLINE</label>
     <input type="text" id="headline" placeholder="Andika kichwa hapa...">
 </div>
 
 <div class="field-group">
-    <label>Maelezo ya Habari</label>
+    <label>NEWS ARTICLE </label>
     <textarea id="article" placeholder="Andika maelezo yote hapa..."></textarea>
 </div>
 
@@ -275,10 +275,10 @@
 </label>
 
 <button class="publish-btn" id="submitBtn" disabled onclick="handlePublish()">
-    TUMA HABARI
+    PUSH THIS NEWS
 </button>
 
-<div id="status-msg">Inasindika... Tafadhali subiri</div>
+<div id="status-msg">Inapakia... Tafadhali subiri</div>
 
 <script>
     const fileInput = document.getElementById('file-input');
