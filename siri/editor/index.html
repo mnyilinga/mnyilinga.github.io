@@ -20,171 +20,150 @@
 
 
 
-
 #mcs-overlay{
+
 position:fixed;
-top:0;
-left:0;
+inset:0;
 width:100%;
-height:100%;
+height:100vh;
+
 background:radial-gradient(circle at top,#020617,#000);
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999999;
-font-family:Inter,system-ui;
+
+display:grid;
+place-items:center;
+
 padding:20px;
+
+z-index:9999999;
+
+font-family:Inter,system-ui;
+
 }
 
 /* CARD */
 
 .mcs-card{
+
 width:100%;
-max-width:380px;
-padding:45px 35px;
+max-width:340px;
+
+padding:32px 26px;
+
 background:rgba(15,23,42,.88);
-border-radius:22px;
+
+border-radius:20px;
+
 text-align:center;
 color:white;
-backdrop-filter:blur(20px);
-border:1px solid rgba(0,194,255,.3);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(0,194,255,.25);
+
 box-shadow:
-0 0 40px rgba(0,194,255,.2),
-0 0 90px rgba(0,0,0,.85);
-display:flex;
-flex-direction:column;
-align-items:center;
+0 0 30px rgba(0,194,255,.15),
+0 0 70px rgba(0,0,0,.85);
+
 }
 
 /* LOGO */
 
 .mcs-logo{
-width:70px;
-margin-bottom:18px;
-filter:drop-shadow(0 0 10px #00C2FF);
+
+width:58px;
+margin-bottom:14px;
+
+filter:drop-shadow(0 0 12px #00C2FF);
+
 }
 
 /* TITLE */
 
 .mcs-title{
-font-size:17px;
-margin-bottom:25px;
+
+font-size:15px;
+line-height:1.45;
+
+margin-bottom:22px;
+
 color:#cbd5f5;
-line-height:1.5;
-text-align:center;
+
 }
 
 .mcs-title span{
+
 color:#00C2FF;
 font-weight:700;
-}
 
-/* SCANNER */
-
-.mcs-scan{
-height:2px;
-width:100%;
-background:linear-gradient(90deg,transparent,#00C2FF,transparent);
-animation:scan 3s infinite;
-margin-bottom:28px;
-}
-
-@keyframes scan{
-0%{transform:translateX(-100%)}
-100%{transform:translateX(100%)}
 }
 
 /* INPUT */
 
 #mcs-pass{
+
 width:100%;
-padding:13px;
-border-radius:12px;
-border:1px solid rgba(0,194,255,.3);
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid rgba(0,194,255,.25);
+
 background:#020617;
+
 color:white;
+
 text-align:center;
-margin-bottom:18px;
-font-size:15px;
-transition:.2s;
+
+margin-bottom:14px;
+
+font-size:14px;
+
 }
 
 #mcs-pass:focus{
+
 outline:none;
+
 border-color:#00C2FF;
-box-shadow:0 0 15px #00C2FF;
+
+box-shadow:0 0 12px #00C2FF;
+
 }
 
 /* BUTTON */
 
 button{
+
 width:100%;
-padding:13px;
+
+padding:12px;
+
 border:none;
-border-radius:12px;
+
+border-radius:10px;
+
 background:linear-gradient(90deg,#00C2FF,#6366F1);
+
 color:white;
+
 font-weight:700;
+
 cursor:pointer;
-letter-spacing:.05em;
+
+font-size:14px;
+
 transition:.25s;
+
 }
 
 button:hover{
+
 transform:translateY(-2px);
-box-shadow:0 0 15px #00C2FF;
-}
 
-#mcs-msg{
-margin-top:14px;
-font-size:13px;
-color:#FF3B30;
-}
-
-/* ZIP OPEN */
-
-.mcs-open{
-animation:openZip .8s forwards;
-}
-
-@keyframes openZip{
-
-0%{
-transform:scaleY(1);
-opacity:1;
-}
-
-100%{
-transform:scaleY(0);
-opacity:0;
-}
+box-shadow:0 0 12px #00C2FF;
 
 }
-
-/* MOBILE OPTIMIZATION */
-
-@media(max-width:480px){
-
-.mcs-card{
-padding:35px 24px;
-}
-
-.mcs-title{
-font-size:15px;
-}
-
-.mcs-logo{
-width:60px;
-}
-
-button{
-font-size:14px;
-}
-
-}
-
-
-
 
 
 
