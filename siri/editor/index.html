@@ -20,19 +20,35 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 #mcs-overlay{
 
 position:fixed;
-inset:0;
-width:100%;
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:100vw;
 height:100vh;
 
 background:radial-gradient(circle at top,#020617,#000);
 
-display:grid;
-place-items:center;
-
-padding:20px;
+display:flex;
+align-items:center;
+justify-content:center;
 
 z-index:9999999;
 
@@ -44,25 +60,27 @@ font-family:Inter,system-ui;
 
 .mcs-card{
 
-width:100%;
-max-width:340px;
+width:calc(100% - 40px);
 
-padding:32px 26px;
+max-width:300px;
 
-background:rgba(15,23,42,.88);
+padding:28px 22px;
 
-border-radius:20px;
+background:rgba(15,23,42,.92);
+
+border-radius:18px;
 
 text-align:center;
+
 color:white;
 
-backdrop-filter:blur(18px);
+backdrop-filter:blur(16px);
 
 border:1px solid rgba(0,194,255,.25);
 
 box-shadow:
-0 0 30px rgba(0,194,255,.15),
-0 0 70px rgba(0,0,0,.85);
+0 0 25px rgba(0,194,255,.18),
+0 0 70px rgba(0,0,0,.9);
 
 }
 
@@ -70,10 +88,11 @@ box-shadow:
 
 .mcs-logo{
 
-width:58px;
-margin-bottom:14px;
+width:52px;
 
-filter:drop-shadow(0 0 12px #00C2FF);
+margin-bottom:12px;
+
+filter:drop-shadow(0 0 10px #00C2FF);
 
 }
 
@@ -81,10 +100,11 @@ filter:drop-shadow(0 0 12px #00C2FF);
 
 .mcs-title{
 
-font-size:15px;
-line-height:1.45;
+font-size:14px;
 
-margin-bottom:22px;
+line-height:1.4;
+
+margin-bottom:18px;
 
 color:#cbd5f5;
 
@@ -93,6 +113,7 @@ color:#cbd5f5;
 .mcs-title span{
 
 color:#00C2FF;
+
 font-weight:700;
 
 }
@@ -103,7 +124,7 @@ font-weight:700;
 
 width:100%;
 
-padding:12px;
+padding:10px;
 
 border-radius:10px;
 
@@ -115,9 +136,9 @@ color:white;
 
 text-align:center;
 
-margin-bottom:14px;
+margin-bottom:12px;
 
-font-size:14px;
+font-size:13px;
 
 }
 
@@ -127,7 +148,7 @@ outline:none;
 
 border-color:#00C2FF;
 
-box-shadow:0 0 12px #00C2FF;
+box-shadow:0 0 10px #00C2FF;
 
 }
 
@@ -137,7 +158,7 @@ button{
 
 width:100%;
 
-padding:12px;
+padding:11px;
 
 border:none;
 
@@ -151,7 +172,9 @@ font-weight:700;
 
 cursor:pointer;
 
-font-size:14px;
+font-size:13px;
+
+letter-spacing:.04em;
 
 transition:.25s;
 
@@ -161,7 +184,7 @@ button:hover{
 
 transform:translateY(-2px);
 
-box-shadow:0 0 12px #00C2FF;
+box-shadow:0 0 10px #00C2FF;
 
 }
 
@@ -171,6 +194,21 @@ box-shadow:0 0 12px #00C2FF;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
