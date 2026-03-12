@@ -9,6 +9,195 @@
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
 
 <style>
+
+
+
+
+
+
+
+
+
+
+
+
+#mcs-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at top,#020617,#000);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999999;
+font-family:Inter,system-ui;
+padding:20px;
+}
+
+/* CARD */
+
+.mcs-card{
+width:100%;
+max-width:380px;
+padding:45px 35px;
+background:rgba(15,23,42,.88);
+border-radius:22px;
+text-align:center;
+color:white;
+backdrop-filter:blur(20px);
+border:1px solid rgba(0,194,255,.3);
+box-shadow:
+0 0 40px rgba(0,194,255,.2),
+0 0 90px rgba(0,0,0,.85);
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+/* LOGO */
+
+.mcs-logo{
+width:70px;
+margin-bottom:18px;
+filter:drop-shadow(0 0 10px #00C2FF);
+}
+
+/* TITLE */
+
+.mcs-title{
+font-size:17px;
+margin-bottom:25px;
+color:#cbd5f5;
+line-height:1.5;
+text-align:center;
+}
+
+.mcs-title span{
+color:#00C2FF;
+font-weight:700;
+}
+
+/* SCANNER */
+
+.mcs-scan{
+height:2px;
+width:100%;
+background:linear-gradient(90deg,transparent,#00C2FF,transparent);
+animation:scan 3s infinite;
+margin-bottom:28px;
+}
+
+@keyframes scan{
+0%{transform:translateX(-100%)}
+100%{transform:translateX(100%)}
+}
+
+/* INPUT */
+
+#mcs-pass{
+width:100%;
+padding:13px;
+border-radius:12px;
+border:1px solid rgba(0,194,255,.3);
+background:#020617;
+color:white;
+text-align:center;
+margin-bottom:18px;
+font-size:15px;
+transition:.2s;
+}
+
+#mcs-pass:focus{
+outline:none;
+border-color:#00C2FF;
+box-shadow:0 0 15px #00C2FF;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:12px;
+background:linear-gradient(90deg,#00C2FF,#6366F1);
+color:white;
+font-weight:700;
+cursor:pointer;
+letter-spacing:.05em;
+transition:.25s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 0 15px #00C2FF;
+}
+
+#mcs-msg{
+margin-top:14px;
+font-size:13px;
+color:#FF3B30;
+}
+
+/* ZIP OPEN */
+
+.mcs-open{
+animation:openZip .8s forwards;
+}
+
+@keyframes openZip{
+
+0%{
+transform:scaleY(1);
+opacity:1;
+}
+
+100%{
+transform:scaleY(0);
+opacity:0;
+}
+
+}
+
+/* MOBILE OPTIMIZATION */
+
+@media(max-width:480px){
+
+.mcs-card{
+padding:35px 24px;
+}
+
+.mcs-title{
+font-size:15px;
+}
+
+.mcs-logo{
+width:60px;
+}
+
+button{
+font-size:14px;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :root{
 --p-width:1080px;
 --p-height:1350px;
@@ -353,6 +542,63 @@ gap:26px;
 
 <body>
 
+
+
+
+
+
+
+
+<div id="mcs-overlay">
+
+<div class="mcs-card">
+
+<svg class="mcs-logo" viewBox="0 0 24 24">
+<defs>
+<linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#00C2FF"/>
+<stop offset="50%" stop-color="#6366F1"/>
+<stop offset="100%" stop-color="#FF3B30"/>
+</linearGradient>
+</defs>
+<path fill="url(#shieldGradient)" d="M12 1l9 4v6c0 5-3.8 9.7-9 11-5.2-1.3-9-6-9-11V5l9-4z"/>
+</svg>
+
+<h2 class="mcs-title">
+This Website Protected by<br>
+<span>Mnyilinga Cyber Security (MCS)</span>
+</h2>
+
+<div class="mcs-scan"></div>
+
+<input id="mcs-pass" type="password" placeholder="Enter Security Code">
+
+<button onclick="mcsUnlock()">ACCESS SYSTEM</button>
+
+<p id="mcs-msg"></p>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="admin-panel">
 <div class="admin-title">Mnyilinga Precision v19.0</div>
 <div class="admin-subtitle">Bandika hadithi yako kisha gusa kitufe chini kuzalisha posters za HD.</div>
@@ -455,6 +701,82 @@ group.appendChild(btn);
 document.getElementById('output-area').appendChild(group);
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+const mcsCode="3714"
+let attempts=0
+let locked=false
+
+function mcsUnlock(){
+
+if(locked) return
+
+let input=document.getElementById("mcs-pass").value
+let msg=document.getElementById("mcs-msg")
+
+if(input===mcsCode){
+
+let overlay=document.getElementById("mcs-overlay")
+
+overlay.classList.add("mcs-open")
+
+setTimeout(()=>{
+overlay.style.display="none"
+},800)
+
+}
+
+else{
+
+attempts++
+
+msg.innerText="ACCESS DENIED"
+
+if(attempts>=3){
+
+locked=true
+msg.innerText="SYSTEM LOCKED 20s"
+
+setTimeout(()=>{
+locked=false
+attempts=0
+msg.innerText=""
+},20000)
+
+}
+
+}
+
+}
+
+document.getElementById("mcs-pass").addEventListener("keyup",function(e){
+if(e.key==="Enter") mcsUnlock()
+})
+
+</script>
+
+
+
+
+
+
 
 </body>
 </html>
