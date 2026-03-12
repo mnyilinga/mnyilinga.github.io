@@ -6,6 +6,151 @@
     <title>Mnyilinga News Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+
+
+
+
+
+
+
+
+
+
+/* ==============================
+   MCS LOCK SCREEN FULL CSS
+   ============================== */
+
+#mcs-overlay{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at top, #020617, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* CARD */
+.mcs-card{
+    display: flex;
+    flex-direction: column;  /* stack logo, title, input, button vertically */
+    align-items: center;     /* horizontal center */
+    justify-content: center; /* vertical center inside card */
+    gap: 14px;               /* space between items */
+    width: calc(100% - 40px);
+    max-width: 300px;
+    padding: 28px 22px;
+    background: rgba(15,23,42,0.92);
+    border-radius: 18px;
+    text-align: center;
+    color: white;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,194,255,0.25);
+    box-shadow:
+        0 0 25px rgba(0,194,255,0.18),
+        0 0 70px rgba(0,0,0,0.9);
+}
+
+/* LOGO */
+.mcs-logo{
+    width: 52px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 10px #00C2FF);
+}
+
+/* TITLE */
+.mcs-title{
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 18px;
+    color: #cbd5f5;
+}
+.mcs-title span{
+    color: #00C2FF;
+    font-weight: 700;
+}
+
+/* INPUT */
+#mcs-pass{
+    width: 100%;
+    max-width: 220px; /* keeps it small and centered */
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,194,255,0.25);
+    background: #020617;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+#mcs-pass:focus{
+    outline: none;
+    border-color: #00C2FF;
+    box-shadow: 0 0 10px #00C2FF;
+}
+
+/* BUTTON */
+button{
+    width: 100%;
+    max-width: 220px;  /* same width as input */
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00C2FF, #6366F1);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: .04em;
+    transition: .25s;
+}
+button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px #00C2FF;
+}
+
+/* ERROR MESSAGE */
+.mcs-error{
+    color: #FF3B30;
+    font-size: 12px;
+    display: none;
+}
+
+/* Responsive tweaks */
+@media(max-width:380px){
+    #mcs-pass, button{
+        max-width: 90%; /* fit smaller devices */
+    }
+}
+
+/* LOCK SCREEN ONLY */
+#mcs-overlay {
+    overflow: hidden;       /* no scroll kwenye lock overlay tu */
+    user-select: none;      /* disable select text kwenye lock overlay tu */
+    touch-action: none;     /* disable pinch-zoom / touch gestures */
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+        
         :root {
             --bg0: #050507;
             --bg1: #0b0b10;
@@ -160,6 +305,59 @@
     </style>
 </head>
 <body>
+
+
+
+
+
+
+
+
+
+<div id="mcs-overlay">
+
+<div class="mcs-card">
+
+<svg class="mcs-logo" viewBox="0 0 24 24">
+<defs>
+<linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#00C2FF"/>
+<stop offset="50%" stop-color="#6366F1"/>
+<stop offset="100%" stop-color="#FF3B30"/>
+</linearGradient>
+</defs>
+<path fill="url(#shieldGradient)" d="M12 1l9 4v6c0 5-3.8 9.7-9 11-5.2-1.3-9-6-9-11V5l9-4z"/>
+</svg>
+
+<h2 class="mcs-title">
+This Website Protected by<br>
+<span>Mnyilinga Cyber Security (MCS)</span>
+</h2>
+
+<div class="mcs-scan"></div>
+
+<input id="mcs-pass" type="password" placeholder="Enter Security Code">
+
+<button onclick="mcsUnlock()">ACCESS SYSTEM</button>
+
+<p id="mcs-msg"></p>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 <div class="app">
     <header class="brandbar">
@@ -323,5 +521,80 @@
         }
     }
 </script>
+
+
+
+
+
+
+
+
+
+<script>
+
+const mcsCode="3714"
+let attempts=0
+let locked=false
+
+function mcsUnlock(){
+
+if(locked) return
+
+let input=document.getElementById("mcs-pass").value
+let msg=document.getElementById("mcs-msg")
+
+if(input===mcsCode){
+
+let overlay=document.getElementById("mcs-overlay")
+
+overlay.classList.add("mcs-open")
+
+setTimeout(()=>{
+overlay.style.display="none"
+},800)
+
+}
+
+else{
+
+attempts++
+
+msg.innerText="ACCESS DENIED"
+
+if(attempts>=3){
+
+locked=true
+msg.innerText="SYSTEM LOCKED 20s"
+
+setTimeout(()=>{
+locked=false
+attempts=0
+msg.innerText=""
+},20000)
+
+}
+
+}
+
+}
+
+document.getElementById("mcs-pass").addEventListener("keyup",function(e){
+if(e.key==="Enter") mcsUnlock()
+})
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+    
 </body>
 </html>
