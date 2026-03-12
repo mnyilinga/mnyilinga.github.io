@@ -32,164 +32,121 @@
 
 
 
+
+/* ==============================
+   MCS LOCK SCREEN FULL CSS
+   ============================== */
+
 #mcs-overlay{
-
-position:fixed;
-
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-width:100vw;
-height:100vh;
-
-background:radial-gradient(circle at top,#020617,#000);
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-z-index:9999999;
-
-font-family:Inter,system-ui;
-
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at top, #020617, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999999;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* CARD */
-
 .mcs-card{
-
-width:calc(100% - 40px);
-
-max-width:300px;
-
-padding:28px 22px;
-
-background:rgba(15,23,42,.92);
-
-border-radius:18px;
-
-text-align:center;
-
-color:white;
-
-backdrop-filter:blur(16px);
-
-border:1px solid rgba(0,194,255,.25);
-
-box-shadow:
-0 0 25px rgba(0,194,255,.18),
-0 0 70px rgba(0,0,0,.9);
-
+    display: flex;
+    flex-direction: column;  /* stack logo, title, input, button vertically */
+    align-items: center;     /* horizontal center */
+    justify-content: center; /* vertical center inside card */
+    gap: 14px;               /* space between items */
+    width: calc(100% - 40px);
+    max-width: 300px;
+    padding: 28px 22px;
+    background: rgba(15,23,42,0.92);
+    border-radius: 18px;
+    text-align: center;
+    color: white;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0,194,255,0.25);
+    box-shadow:
+        0 0 25px rgba(0,194,255,0.18),
+        0 0 70px rgba(0,0,0,0.9);
 }
 
 /* LOGO */
-
 .mcs-logo{
-
-width:52px;
-
-margin-bottom:12px;
-
-filter:drop-shadow(0 0 10px #00C2FF);
-
+    width: 52px;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 10px #00C2FF);
 }
 
 /* TITLE */
-
 .mcs-title{
-
-font-size:14px;
-
-line-height:1.4;
-
-margin-bottom:18px;
-
-color:#cbd5f5;
-
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 18px;
+    color: #cbd5f5;
 }
-
 .mcs-title span{
-
-color:#00C2FF;
-
-font-weight:700;
-
+    color: #00C2FF;
+    font-weight: 700;
 }
 
 /* INPUT */
-
 #mcs-pass{
-
-width:100%;
-
-padding:10px;
-
-border-radius:10px;
-
-border:1px solid rgba(0,194,255,.25);
-
-background:#020617;
-
-color:white;
-
-text-align:center;
-
-margin-bottom:12px;
-
-font-size:13px;
-
+    width: 100%;
+    max-width: 220px; /* keeps it small and centered */
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,194,255,0.25);
+    background: #020617;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    box-sizing: border-box;
 }
-
 #mcs-pass:focus{
-
-outline:none;
-
-border-color:#00C2FF;
-
-box-shadow:0 0 10px #00C2FF;
-
+    outline: none;
+    border-color: #00C2FF;
+    box-shadow: 0 0 10px #00C2FF;
 }
 
 /* BUTTON */
-
 button{
-
-width:100%;
-
-padding:11px;
-
-border:none;
-
-border-radius:10px;
-
-background:linear-gradient(90deg,#00C2FF,#6366F1);
-
-color:white;
-
-font-weight:700;
-
-cursor:pointer;
-
-font-size:13px;
-
-letter-spacing:.04em;
-
-transition:.25s;
-
+    width: 100%;
+    max-width: 220px;  /* same width as input */
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00C2FF, #6366F1);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: .04em;
+    transition: .25s;
 }
-
 button:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 0 10px #00C2FF;
-
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px #00C2FF;
 }
 
+/* ERROR MESSAGE */
+.mcs-error{
+    color: #FF3B30;
+    font-size: 12px;
+    display: none;
+}
 
-
+/* Responsive tweaks */
+@media(max-width:380px){
+    #mcs-pass, button{
+        max-width: 90%; /* fit smaller devices */
+    }
+}
 
 
 
