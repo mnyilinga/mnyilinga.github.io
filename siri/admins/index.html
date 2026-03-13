@@ -148,43 +148,6 @@ button:hover{
 
 
 
-
-
-
-
-/* BACK TO SIRI PRO BUTTON CONTAINER UI */
-
-/* Hii ndio container ya button yako */
-#mcs-back-button {
-  position: fixed;
-  bottom: 108px; /* sasa hii ni distance kutoka chini */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999999;
-  user-select: none;
-  touch-action: none;
-  pointer-events: auto;
-}
-
-/* 🔹 Sogeza juu au chini: */
-#mcs-back-button.move-up {
-  bottom: 1px; /* inasogeza juu zaidi */
-}
-
-#mcs-back-button.move-down {
-  bottom: 10px;  /* inasogeza chini zaidi */
-}
-
-
-
-
-
-
-
-
-
-
-
         
 
 
@@ -752,17 +715,6 @@ This Website Protected by<br>
 </div>
 
     
-
-
-
-<!-- BACK TO SIRI BUTTON -->
-<div id="mcs-back-button">
-  <button onclick="goToSiri()">BACK TO SIRI</button>
-</div>
-
-
-
-
 
 
 
@@ -1450,15 +1402,6 @@ if(e.key==="Enter") mcsUnlock()
 </script>
 
 
-
-
-
-
-<script>
-function goToSiri(){
-  window.location.href = "https://mnyilinga.co.tz/siri";
-}
-</script>
 
 
 
