@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - Ukurasa Haupo</title>
+
+<title>404 - Page Not Found | Mnyilinga News</title>
 
 <style>
 
@@ -11,63 +12,106 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family: Arial, Helvetica, sans-serif;
+font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
+background:#0e0e0e;
+color:white;
 height:100vh;
 display:flex;
-justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#8B0000,#ff0000);
-color:white;
+justify-content:center;
 text-align:center;
+padding:20px;
 }
 
 .container{
-background:rgba(0,0,0,0.35);
-padding:60px;
-border-radius:20px;
-backdrop-filter: blur(10px);
-box-shadow:0 20px 40px rgba(0,0,0,0.4);
-max-width:500px;
-width:90%;
+max-width:600px;
 animation:fadeIn 1s ease;
 }
 
-h1{
-font-size:120px;
-margin-bottom:10px;
-letter-spacing:5px;
+.logo{
+font-size:14px;
+letter-spacing:3px;
+margin-bottom:30px;
+color:#aaa;
 }
 
-h2{
-font-size:28px;
+.error{
+font-size:120px;
+font-weight:900;
+line-height:1;
+background:linear-gradient(45deg,#ffffff,#999999);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.title{
+font-size:26px;
+margin-top:10px;
 margin-bottom:15px;
 }
 
-p{
-font-size:16px;
-opacity:0.9;
-margin-bottom:30px;
+.desc{
+color:#bbb;
+line-height:1.6;
+margin-bottom:35px;
 }
 
-a{
-display:inline-block;
-padding:14px 30px;
-background:white;
-color:#c40000;
+.actions{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:12px 24px;
 text-decoration:none;
-border-radius:50px;
-font-weight:bold;
-transition:0.3s;
-box-shadow:0 10px 20px rgba(0,0,0,0.3);
+border-radius:6px;
+font-size:14px;
+transition:0.25s;
 }
 
-a:hover{
-transform:scale(1.05);
-background:#111;
-color:white;
+.home{
+background:white;
+color:black;
+}
+
+.home:hover{
+background:#ddd;
+}
+
+.news{
+border:1px solid #444;
+color:#ccc;
+}
+
+.news:hover{
+background:#1a1a1a;
+border-color:#777;
+}
+
+.countdown{
+margin-top:30px;
+font-size:13px;
+color:#888;
+}
+
+.progress{
+margin-top:12px;
+height:3px;
+background:#222;
+border-radius:3px;
+overflow:hidden;
+}
+
+.bar{
+height:100%;
+width:100%;
+background:white;
+animation:load 6s linear forwards;
 }
 
 @keyframes fadeIn{
@@ -81,6 +125,15 @@ transform:translateY(0);
 }
 }
 
+@keyframes load{
+from{
+width:100%;
+}
+to{
+width:0%;
+}
+}
+
 </style>
 </head>
 
@@ -88,41 +141,52 @@ transform:translateY(0);
 
 <div class="container">
 
-<h1>404</h1>
+<div class="logo">
+MNYILINGA NEWS
+</div>
 
-<h2>Ukurasa haupo</h2>
+<div class="error">
+404
+</div>
 
-<p>
-Inaonekana link ya page uliyojaribu kufungua haipo kwenye website yetu.
-hivi punde utarejeshwa kwenye main page.
-</p>
+<div class="title">
+Page Not Found
+</div>
 
-<a href="/">Rudi Mwanzo</a>
+<div class="desc">
+It appears that the page you tried to access does not exist on our website.
+You will be redirected to the homepage shortly.
+</div>
+
+<div class="actions">
+
+<a href="/" class="btn home">
+Return Home
+</a>
+
+<a href="/news" class="btn news">
+Browse News
+</a>
 
 </div>
 
+<div class="countdown">
+Redirecting automatically...
+</div>
 
+<div class="progress">
+<div class="bar"></div>
+</div>
 
-
-
-
-
-
-
+</div>
 
 <script>
+
 setTimeout(function(){
-  window.location.href = "/";
-}, 20000);
+window.location.href="/";
+},6000)
+
 </script>
 
-
-
-
-
-
-
-
-  
 </body>
 </html>
