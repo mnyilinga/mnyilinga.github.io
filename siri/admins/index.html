@@ -21,13 +21,14 @@
 
 
 
-<!-- =======================
-     MCS LOCK SCREEN HTML + CSS + JS
-     ======================= -->
-<style>
+
+
+
+
 /* ==============================
    MCS LOCK SCREEN FULL CSS
    ============================== */
+
 #mcs-overlay{
     position: fixed;
     top: 50%;
@@ -49,10 +50,10 @@
 /* CARD */
 .mcs-card{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
+    flex-direction: column;  /* stack logo, title, input, button vertically */
+    align-items: center;     /* horizontal center */
+    justify-content: center; /* vertical center inside card */
+    gap: 14px;               /* space between items */
     width: calc(100% - 40px);
     max-width: 300px;
     padding: 28px 22px;
@@ -89,7 +90,7 @@
 /* INPUT */
 #mcs-pass{
     width: 100%;
-    max-width: 220px;
+    max-width: 220px; /* keeps it small and centered */
     padding: 10px;
     border-radius: 10px;
     border: 1px solid rgba(0,194,255,0.25);
@@ -108,7 +109,7 @@
 /* BUTTON */
 button{
     width: 100%;
-    max-width: 220px;
+    max-width: 220px;  /* same width as input */
     padding: 11px;
     border: none;
     border-radius: 10px;
@@ -135,27 +136,16 @@ button:hover{
 /* Responsive tweaks */
 @media(max-width:380px){
     #mcs-pass, button{
-        max-width: 90%;
+        max-width: 90%; /* fit smaller devices */
     }
 }
 
 /* LOCK SCREEN ONLY */
 #mcs-overlay {
-    overflow: hidden;
-    user-select: none;
-    touch-action: none;
+    overflow: hidden;       /* no scroll kwenye lock overlay tu */
+    user-select: none;      /* disable select text kwenye lock overlay tu */
+    touch-action: none;     /* disable pinch-zoom / touch gestures */
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
