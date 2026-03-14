@@ -26,26 +26,55 @@
 
 
 
-      
-/* Scrollbar nzima */
+
+/* default scrollbar kwa PC */
 ::-webkit-scrollbar{
   width:6px;
 }
 
-/* sehemu inayotembea */
 ::-webkit-scrollbar-thumb{
   background:#ff007f;
   border-radius:10px;
-  min-height:40px; /* hapa ndio unaifanya iwe fupi */
 }
 
-/* background */
 ::-webkit-scrollbar-track{
   background:#1a162b;
 }
 
+/* fake scrollbar */
+.scroll-indicator{
+position:fixed;
+right:3px;
+top:0;
+width:4px;
+height:0;
+background:#ff007f;
+border-radius:10px;
+z-index:9999;
+display:none; /* mwanzo ifichwe */
+}
+
+/* ionekane kwenye simu tu */
+@media (max-width:768px){
+.scroll-indicator{
+display:block;
+}
+}
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
 
 
@@ -460,6 +489,17 @@
     </style>
   </head>
   <body>
+
+
+
+
+<!-- HAPA NDIPO UNAWEKA -->
+<div class="scroll-indicator"></div>
+
+
+
+
+    
     <div id="successToast" class="toast">
       <i class="fas fa-check-circle"></i> Hongera mkasa wako umetumwa
       Kikamilifu! 🤫
@@ -659,5 +699,42 @@
         }, 2000);
       });
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<script>
+
+window.addEventListener("scroll",function(){
+
+let winScroll = document.body.scrollTop || document.documentElement.scrollTop
+let height = document.documentElement.scrollHeight - document.documentElement.clientHeight
+let scrolled = (winScroll / height) * 100
+
+document.querySelector(".scroll-indicator").style.height = scrolled + "%"
+
+})
+  
+</script>
+
+
+    
   </body>
 </html>
