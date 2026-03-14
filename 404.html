@@ -27,51 +27,53 @@ padding:20px;
 }
 
 .container{
-max-width:600px;
-animation:fadeIn 1s ease;
+width:100%;
+max-width:420px;
+animation:fadeIn 0.8s ease;
 }
 
 .logo{
-font-size:14px;
+font-size:12px;
 letter-spacing:3px;
-margin-bottom:30px;
+margin-bottom:25px;
 color:#aaa;
 }
 
 .error{
-font-size:120px;
+font-size:90px;
 font-weight:900;
 line-height:1;
-background:linear-gradient(45deg,#ffffff,#999999);
+background:linear-gradient(45deg,#ffffff,#888888);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
 .title{
-font-size:26px;
+font-size:22px;
 margin-top:10px;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 .desc{
+font-size:14px;
 color:#bbb;
 line-height:1.6;
-margin-bottom:35px;
+margin-bottom:30px;
 }
 
 .actions{
 display:flex;
-justify-content:center;
-gap:15px;
-flex-wrap:wrap;
+flex-direction:column;
+gap:12px;
 }
 
 .btn{
-padding:12px 24px;
+padding:14px;
 text-decoration:none;
 border-radius:6px;
 font-size:14px;
 transition:0.25s;
+display:block;
 }
 
 .home{
@@ -94,13 +96,13 @@ border-color:#777;
 }
 
 .countdown{
-margin-top:30px;
-font-size:13px;
+margin-top:25px;
+font-size:12px;
 color:#888;
 }
 
 .progress{
-margin-top:12px;
+margin-top:10px;
 height:3px;
 background:#222;
 border-radius:3px;
@@ -111,13 +113,13 @@ overflow:hidden;
 height:100%;
 width:100%;
 background:white;
-animation:load 6s linear forwards;
+animation:load 20s linear forwards;
 }
 
 @keyframes fadeIn{
 from{
 opacity:0;
-transform:translateY(20px);
+transform:translateY(15px);
 }
 to{
 opacity:1;
@@ -132,6 +134,23 @@ width:100%;
 to{
 width:0%;
 }
+}
+
+@media(min-width:700px){
+
+.error{
+font-size:120px;
+}
+
+.actions{
+flex-direction:row;
+justify-content:center;
+}
+
+.btn{
+padding:12px 24px;
+}
+
 }
 
 </style>
@@ -171,7 +190,7 @@ Browse News
 </div>
 
 <div class="countdown">
-Redirecting automatically...
+Automatic redirect in 20 seconds
 </div>
 
 <div class="progress">
@@ -184,7 +203,7 @@ Redirecting automatically...
 
 setTimeout(function(){
 window.location.href="/";
-},6000)
+},20000)
 
 </script>
 
